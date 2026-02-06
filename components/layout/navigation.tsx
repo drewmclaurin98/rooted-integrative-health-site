@@ -13,7 +13,7 @@ export function Navigation() {
         <div className="flex items-center justify-between h-16">
           {/* Logo/Brand */}
           <Link href="/" className="flex-shrink-0 flex items-center">
-            <Image src="../../../public/file.svg" alt="RIH Logo" width={40} height={40} />
+            <Image src="/rih-square-no-title.png" alt="RIH Logo" width={48} height={48} />
           </Link>
 
           {/* Desktop Navigation */}
