@@ -1,9 +1,17 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import type { Metadata, Viewport } from "next";
 import { Header } from "../components/layout/header"
 import { Footer } from "../components/layout/footer"
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+}
+
 export const metadata: Metadata = {
+  metadataBase: new URL("https://rootedintegrativehealth.com"),
   title: "RIH | Integrative Health - Holistic Wellness Care",
   description: "Experience integrative medicine combining conventional and natural healing. Personalized treatment plans for your whole self. Schedule your wellness visit today.",
   icons: {
@@ -11,10 +19,6 @@ export const metadata: Metadata = {
     apple: "/rih-square-no-title.png",
   },
   keywords: ["integrative medicine", "holistic health", "acupuncture", "herbal medicine", "wellness", "natural healing"],
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-  },
   robots: {
     index: true,
     follow: true,
@@ -51,7 +55,11 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="font-sans text-slate-900">
         <Header />
-        <main>{children}</main>
+        <main>
+          {children}
+          <Analytics />
+          <SpeedInsights />
+        </main>
         <Footer />
       </body>
     </html>
