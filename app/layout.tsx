@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from "next";
 import { Header } from "../components/layout/header"
 import { Footer } from "../components/layout/footer"
@@ -57,6 +58,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         <main>
           {children}
           <Analytics />
+          <SpeedInsights />
         </main>
         <Footer />
       </body>
