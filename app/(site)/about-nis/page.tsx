@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 
-export default function AboutPage() {
+export default function AboutNISPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
