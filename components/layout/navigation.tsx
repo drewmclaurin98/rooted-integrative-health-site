@@ -13,34 +13,31 @@ export function Navigation() {
         <div className="flex items-center justify-between h-16">
           {/* Logo/Brand */}
           <Link href="/" className="flex-shrink-0 flex items-center">
-            <Image src="/rih-square-no-title.png" alt="RIH Logo" width={48} height={48} />
+            <Image src="/rih-square-no-title.png" alt="Rooted Integrative Health" width={48} height={48} />
           </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <Link
-              href="/"
-              className="text-gray-700 hover:text-accent-main font-medium transition-colors duration-200"
+              href="/about-nis"
+              className="block px-3 py-2 rounded-md text-gray-700 hover:text-accent-main hover:bg-gray-50 font-medium transition-colors duration-200 whitespace-nowrap"
+              onClick={() => setIsOpen(false)}
             >
-              Home
+              About NIS
+            </Link>
+            <Link
+              href="/services"
+              className="block px-3 py-2 rounded-md text-gray-700 hover:text-accent-main hover:bg-gray-50 font-medium transition-colors duration-200 whitespace-nowrap"
+              onClick={() => setIsOpen(false)}
+            >
+              Services
             </Link>
             <Link
               href="/booking"
-              className="text-gray-700 hover:text-accent-main font-medium transition-colors duration-200"
+              className="block w-full text-center px-3 py-2 bg-accent-main hover:bg-accent-dark text-white font-medium rounded-lg transition-colors duration-200"
+              onClick={() => setIsOpen(false)}
             >
-              Booking
-            </Link>
-            <Link
-              href="/about"
-              className="text-gray-700 hover:text-accent-main font-medium transition-colors duration-200"
-            >
-              About Us
-            </Link>
-            <Link
-              href="/booking"
-              className="inline-flex items-center justify-center px-4 py-2 bg-accent-main hover:bg-accent-dark text-white font-medium rounded-lg transition-colors duration-200"
-            >
-              Schedule
+              Book Appointment
             </Link>
           </div>
 
@@ -95,32 +92,25 @@ export function Navigation() {
         <div className="md:hidden bg-white border-t border-gray-200">
           <div className="px-2 pt-2 pb-3 space-y-1">
             <Link
-              href="/"
-              className="block px-3 py-2 rounded-md text-gray-700 hover:text-accent-main hover:bg-gray-50 font-medium transition-colors duration-200"
+              href="/about-nis"
+              className="block px-3 py-2 rounded-md text-gray-700 hover:text-accent-main hover:bg-gray-50 font-medium transition-colors duration-200 whitespace-nowrap"
               onClick={() => setIsOpen(false)}
             >
-              Home
+              About NIS
+            </Link>
+            <Link
+              href="/services"
+              className="block px-3 py-2 rounded-md text-gray-700 hover:text-accent-main hover:bg-gray-50 font-medium transition-colors duration-200 whitespace-nowrap"
+              onClick={() => setIsOpen(false)}
+            >
+              Services
             </Link>
             <Link
               href="/booking"
-              className="block px-3 py-2 rounded-md text-gray-700 hover:text-accent-main hover:bg-gray-50 font-medium transition-colors duration-200"
+              className="block w-full text-center px-3 py-2 bg-accent-main hover:bg-accent-dark text-white font-medium rounded-lg transition-colors duration-200"
               onClick={() => setIsOpen(false)}
             >
-              Booking
-            </Link>
-            <Link
-              href="/about"
-              className="block px-3 py-2 rounded-md text-gray-700 hover:text-accent-main hover:bg-gray-50 font-medium transition-colors duration-200"
-              onClick={() => setIsOpen(false)}
-            >
-              About Us
-            </Link>
-            <Link
-              href="/booking"
-              className="block w-full text-center px-3 py-2 mt-2 bg-accent-main hover:bg-accent-dark text-white font-medium rounded-lg transition-colors duration-200"
-              onClick={() => setIsOpen(false)}
-            >
-              Schedule
+              Book Appointment
             </Link>
           </div>
         </div>
