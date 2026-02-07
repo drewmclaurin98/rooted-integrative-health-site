@@ -14,6 +14,9 @@ export function Navigation() {
           {/* Logo/Brand */}
           <Link href="/" className="flex-shrink-0 flex items-center">
             <Image src="/rih-square-no-title.png" alt="Rooted Integrative Health" width={48} height={48} />
+            <span className="ml-3 text-md font-semibold text-gray-800 hidden sm:inline">
+              Rooted Integrative Health
+            </span>
           </Link>
 
           {/* Desktop Navigation */}

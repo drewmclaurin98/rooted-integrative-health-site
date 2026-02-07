@@ -69,22 +69,6 @@ export function Hero() {
                 </svg>
               </Link>
             </div>
-
-            {/* Stats/Trust indicators */}
-            <div className="mt-12 grid grid-cols-3 gap-6 pt-8 border-t border-white/10">
-              <div>
-                <p className="text-2xl font-bold text-accent-main">15+</p>
-                <p className="text-sm text-gray-700">Years</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-accent-main">2000+</p>
-                <p className="text-sm text-gray-700">Patients</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-accent-main">98%</p>
-                <p className="text-sm text-gray-700">Satisfied</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>

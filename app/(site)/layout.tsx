@@ -12,8 +12,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://rootedintegrativehealth.com"),
-  title: "RIH | Integrative Health - Holistic Wellness Care",
-  description: "Experience integrative medicine combining conventional and natural healing. Personalized treatment plans for your whole self. Schedule your wellness visit today.",
+  title: "Rooted Integrative Health - NIS",
+  description: "Experience integrative medicine that combines the best of conventional and natural healing. We will work with you to address the root causes of health challenges and support your body's natural ability to heal.",
   icons: {
     icon: "/rih-square-no-title.png",
     apple: "/rih-square-no-title.png",
@@ -24,8 +24,8 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
-    title: "RIH | Integrative Health - Holistic Wellness Care",
-    description: "Experience integrative medicine combining the best of conventional and natural healing.",
+    title: "Rooted Integrative Health - NIS",
+    description: "Experience integrative medicine that combines the best of conventional and natural healing. We will work with you to address the root causes of health challenges and support your body's natural ability to heal.",
     type: "website",
     locale: "en_US",
     url: "https://rootedintegrativehealth.com",
@@ -41,8 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "RIH | Integrative Health - Holistic Wellness Care",
-    description: "Experience integrative medicine combining conventional and natural healing.",
+    title: "Rooted Integrative Health - NIS",
+    description: "Experience integrative medicine that combines the best of conventional and natural healing. We will work with you to address the root causes of health challenges and support your body's natural ability to heal.",
     images: ["/rih-square-no-title.png"],
   },
   alternates: {
