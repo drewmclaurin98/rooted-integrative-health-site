@@ -20,7 +20,7 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center gap-4">
             <Link
               href="/about-nis"
               className="block px-3 py-2 rounded-md text-gray-700 hover:text-primary hover:bg-background-page font-medium transition-colors duration-200 whitespace-nowrap"
@@ -42,10 +42,41 @@ export function Navigation() {
             >
               Book Appointment
             </Link>
+
+            <Link
+              href="https://www.instagram.com/yourhandle"
+              target="_blank"
+              className="flex items-center px-2 py-2 rounded-md text-gray-700 hover:text-primary hover:bg-background-page font-medium transition-colors duration-200 whitespace-nowrap"
+              onClick={() => setIsOpen(false)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="h-5 w-5"
+              >
+                <path d="M7.75 2h8.5C19.55 2 22 4.45 22 7.75v8.5C22 19.55 19.55 22 16.25 22h-8.5C4.45 22 2 19.55 2 16.25v-8.5C2 4.45 4.45 2 7.75 2zm0 1.5C5.3 3.5 3.5 5.3 3.5 7.75v8.5c0 2.45 1.8 4.25 4.25 4.25h8.5c2.45 0 4.25-1.8 4.25-4.25v-8.5c0-2.45-1.8-4.25-4.25-4.25h-8.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm5.5-.9a1.1 1.1 0 110 2.2 1.1 1.1 0 010-2.2z" />
+              </svg>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex gap-4">
+            <Link
+              href="https://www.instagram.com/yourhandle"
+              target="_blank"
+              className="flex items-center px-2 py-2 rounded-md text-gray-700 hover:text-primary hover:bg-background-page font-medium transition-colors duration-200 whitespace-nowrap"
+              onClick={() => setIsOpen(false)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="h-5 w-5"
+              >
+                <path d="M7.75 2h8.5C19.55 2 22 4.45 22 7.75v8.5C22 19.55 19.55 22 16.25 22h-8.5C4.45 22 2 19.55 2 16.25v-8.5C2 4.45 4.45 2 7.75 2zm0 1.5C5.3 3.5 3.5 5.3 3.5 7.75v8.5c0 2.45 1.8 4.25 4.25 4.25h8.5c2.45 0 4.25-1.8 4.25-4.25v-8.5c0-2.45-1.8-4.25-4.25-4.25h-8.5zM12 7a5 5 0 110 10 5 5 0 010-10zm0 1.5a3.5 3.5 0 100 7 3.5 3.5 0 000-7zm5.5-.9a1.1 1.1 0 110 2.2 1.1 1.1 0 010-2.2z" />
+              </svg>
+            </Link>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-primary hover:bg-background-surface transition-colors duration-200"
