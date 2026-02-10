@@ -5,7 +5,7 @@ import Image from 'next/image'
 
 export function Hero() {
   return (
-    <section className="relative w-full flex items-center justify-center overflow-hidden bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end py-12 sm:py-20">
+    <section className="py-12 sm:py-20">
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -13,32 +13,31 @@ export function Hero() {
           {/* Left: Featured Image */}
           <div className="flex justify-center lg:justify-start">
             <div className="relative w-full max-w-md">
-              <div className="bg-accent-light/20 rounded-lg p-8 h-96 flex items-center justify-center">
+              <div className="bg-background-muted rounded-lg p-8 h-96 flex items-center justify-center">
                 <p className="text-center text-gray-600 font-medium">
                   Image Placeholder
                 </p>
               </div>
-              <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-accent-main rounded-full opacity-20 blur-2xl" />
+              <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-primary rounded-full opacity-20 blur-2xl" />
             </div>
           </div>
 
           {/* Right: Content */}
           <div className="flex flex-col justify-center">
-            {/* Logo */}
-            <div className="mb-8 flex items-center gap-3">
+            {/* Logo + Headline */}
+            <div className="mb-8 flex items-center gap-4">
               <Image
                 src="/logo-v3-no-bg-with-text.png"
                 alt="RIH Logo"
-                width={100}
-                height={56}
-                className="rounded-lg"
+                width={120}
+                height={120}
+                className="rounded-lg flex-shrink-0"
               />
-            </div>
 
-            {/* Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
-              Neurological Integrative Systems
-            </h1>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
+                Neurological Integrative Systems
+              </h1>
+            </div>
 
             {/* Subtext */}
             <p className="mb-8 text-lg sm:text-lg text-gray-700 leading-relaxed">
@@ -51,7 +50,7 @@ export function Hero() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/booking"
-                className="inline-flex items-center justify-center px-8 py-4 bg-accent-main hover:bg-accent-dark text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
               >
                 Book Appointment
                 <svg
