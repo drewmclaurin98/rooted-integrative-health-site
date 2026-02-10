@@ -1,6 +1,7 @@
 'use client'
 
 import Link from "next/link"
+import { BookingWidget } from "../../../components/booking/bookingWidget"
 
 export default function BookingPage() {
   return (
@@ -15,6 +16,16 @@ export default function BookingPage() {
               Our integrated booking system is under development. Please check back soon!
             </p>
           </div>
+          {/* <BookingWidget service={{
+            name: "Initial Consultation",
+            price: 90,
+            duration: 90
+          }} />
+          <BookingWidget service={{
+            name: "Regular 20-minute Appointment",
+            price: 60,
+            duration: 20
+          }} /> */}
         </div>
       </div>
     </div>
