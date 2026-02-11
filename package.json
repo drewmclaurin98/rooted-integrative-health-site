@@ -12,7 +12,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@prisma/adapter-better-sqlite3": "^7.3.0",
+    "@prisma/adapter-libsql": "^7.3.0",
     "@prisma/client": "^7.3.0",
     "@stripe/stripe-js": "^8.7.0",
     "@vercel/analytics": "^1.6.1",
