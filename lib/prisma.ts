@@ -5,16 +5,29 @@ declare global {
   var prisma: PrismaClient | undefined
 }
 
-const adapter = new PrismaLibSql({
-  url: process.env.TURSO_DATABASE_URL || "file:./dev.db",
-  authToken: process.env.TURSO_AUTH_TOKEN,
-})
+const isProd = process.env.NODE_ENV === "production"
 
-export const prisma =
-  global.prisma ??
-  new PrismaClient({
-    adapter,
-    log: ["query", "error", "warn"],
+let client: PrismaClient
+
+if (isProd) {
+  if (!process.env.TURSO_DATABASE_URL) {
+    throw new Error("TURSO_DATABASE_URL is not defined")
+  }
+
+  const adapter = new PrismaLibSql({
+    url: process.env.TURSO_DATABASE_URL,
+    authToken: process.env.TURSO_AUTH_TOKEN,
   })
 
-if (process.env.NODE_ENV !== "production") global.prisma = prisma
+  client = new PrismaClient({ adapter })
+} else {
+  const adapter = new PrismaLibSql({
+    url: "file:dev.db",
+  })
+
+  client = new PrismaClient({ adapter })
+}
+
+export const prisma = global.prisma ?? client
+
+if (!isProd) global.prisma = prisma

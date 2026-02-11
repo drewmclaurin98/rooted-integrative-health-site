@@ -3,8 +3,13 @@
 import "dotenv/config"
 import { defineConfig } from "prisma/config"
 
+const isProd = process.env.NODE_ENV === "production"
+
 export default defineConfig({
+  schema: "prisma/schema.prisma",
   datasource: {
-    url: process.env.DATABASE_URL!, // non-null assertion to satisfy TS
+    url: isProd
+      ? process.env.TURSO_DATABASE_URL
+      : "file:./dev.db",
   },
 })
