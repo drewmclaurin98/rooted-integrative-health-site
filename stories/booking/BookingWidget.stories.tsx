@@ -1,31 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import { BookingWidget, BookingService } from "../../components/booking/bookingWidget"
 
-const mockService: BookingService = {
-  name: "Initial Consultation",
-  price: 150,
-  duration: 60,
-}
+const services: BookingService[] = [
+  { name: "Initial Consultation", price: 150, duration: 60 },
+  { name: "Follow-Up Session", price: 100, duration: 45 },
+]
 
 const meta: Meta<typeof BookingWidget> = {
-  title: "Booking/BookingWidget",
+  title: "Booking/Widget",
   component: BookingWidget,
-  argTypes: {
-    service: { control: false },
-  },
 }
 
 export default meta
 type Story = StoryObj<typeof BookingWidget>
 
-// Default story with wrapper
 export const Default: Story = {
   args: {
-    service: mockService,
+    services,
+    mockStripe: true, // enable mock for Storybook
   },
-  render: (args) => (
-    <div className="bg-emerald-50 min-h-screen flex items-center justify-center p-8">
-      <BookingWidget {...args} />
-    </div>
-  ),
 }

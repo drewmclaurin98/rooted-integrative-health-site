@@ -1,98 +1,39 @@
-"use client"
+import { useState, useEffect } from "react"
+import { BookingService } from "./bookingWidget"
 
-import { useEffect, useState } from "react"
-import { getAvailableSlots } from "../../lib/availability"
-
-type TimeSlotPickerProps = {
-  duration: number // minutes
-  onSelect: (isoTime: string) => void
+type Props = {
+  service: BookingService
+  selectedTime: string | null
+  onSelect: (time: string) => void
+  mockBookedSlots?: string[]
 }
 
-export function TimeSlotPicker({
-  duration,
-  onSelect,
-}: TimeSlotPickerProps) {
-  const [selectedDate, setSelectedDate] = useState(() => {
-    const today = new Date()
-    today.setHours(0, 0, 0, 0)
-    return today
-  })
-
-  const [slots, setSlots] = useState<string[]>([])
-  const [selectedSlot, setSelectedSlot] = useState<string | null>(null)
+export function TimeSlotPicker({ service, selectedTime, onSelect, mockBookedSlots }: Props) {
+  const [availableSlots, setAvailableSlots] = useState<string[]>([])
 
   useEffect(() => {
-    const available = getAvailableSlots(
-      selectedDate,
-      9,   // start hour
-      18,  // end hour
-      duration
-    )
-
-    setSlots(available)
-    setSelectedSlot(null)
-  }, [selectedDate, duration])
-
-  function handleSelect(slot: string) {
-    setSelectedSlot(slot)
-    onSelect(slot)
-  }
+    const slots = Array.from({ length: 8 }, (_, i) => `${9 + i}:00`) // 9AM–5PM
+    const booked = mockBookedSlots || []
+    setAvailableSlots(slots.filter((s) => !booked.includes(s)))
+  }, [service, mockBookedSlots])
 
   return (
-    <div className="space-y-4">
-      {/* Date picker */}
-      <div>
-        <label className="block text-sm font-medium text-slate-700">
-          Select a date
-        </label>
-        <input
-          type="date"
-          value={selectedDate.toISOString().split("T")[0]}
-          onChange={(e) => {
-            const date = new Date(e.target.value)
-            date.setHours(0, 0, 0, 0)
-            setSelectedDate(date)
-          }}
-          className="mt-1 w-full rounded-lg border border-slate-300 px-3 py-2 focus:border-emerald-500 focus:outline-none"
-        />
-      </div>
-
-      {/* Time slots */}
-      <div>
-        <p className="text-sm font-medium text-slate-700 mb-2">
-          Available times
-        </p>
-
-        {slots.length === 0 ? (
-          <p className="text-sm text-slate-500">
-            No availability for this date.
-          </p>
-        ) : (
-          <div className="grid grid-cols-2 gap-2">
-            {slots.map((slot) => {
-              const isSelected = slot === selectedSlot
-
-              return (
-                <button
-                  key={slot}
-                  type="button"
-                  onClick={() => handleSelect(slot)}
-                  className={[
-                    "rounded-lg border px-3 py-2 text-sm transition",
-                    isSelected
-                      ? "border-emerald-600 bg-emerald-600 text-white"
-                      : "border-slate-300 bg-white text-slate-700 hover:border-emerald-500",
-                  ].join(" ")}
-                >
-                  {new Date(slot).toLocaleTimeString([], {
-                    hour: "numeric",
-                    minute: "2-digit",
-                  })}
-                </button>
-              )
-            })}
-          </div>
-        )}
+    <div className="space-y-2">
+      <label className="text-lg font-medium">Select a time:</label>
+      <div className="flex flex-wrap gap-2">
+        {availableSlots.map((slot) => (
+          <button
+            key={slot}
+            className={`px-3 py-1 border rounded ${
+              selectedTime === slot
+                ? "bg-emerald-600 text-white"
+                : "bg-white border-slate-300 hover:bg-emerald-50"
+            }`}
+            onClick={() => onSelect(slot)}
+          >
+            {slot}
+          </button>
+        ))}
       </div>
     </div>
   )

@@ -1,43 +1,44 @@
 "use client"
 
 import { useState } from "react"
+import { ServiceSelector } from "./serviceSelector"
 import { TimeSlotPicker } from "./timeSlotPicker"
 import { BookButton } from "./bookingButton"
 
 export type BookingService = {
   name: string
   price: number
-  duration: number // minutes
+  duration: number
 }
 
-type BookingWidgetProps = {
-  service: BookingService
+type Props = {
+  services: BookingService[]
+  mockStripe?: boolean
 }
 
-export function BookingWidget({ service }: BookingWidgetProps) {
-  const [time, setTime] = useState<string | null>(null)
+export function BookingWidget({ services, mockStripe }: Props) {
+  const [selectedService, setSelectedService] = useState<BookingService | null>(null)
+  const [selectedTime, setSelectedTime] = useState<string | null>(null)
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 space-y-6">
-      <div>
-        <h2 className="text-2xl font-semibold text-slate-900">
-          {service.name}
-        </h2>
-        <p className="text-slate-600">
-          {service.duration} minutes · ${service.price}
-        </p>
-      </div>
-
-      <TimeSlotPicker
-        duration={service.duration}
-        onSelect={setTime}
+    <div className="space-y-4 p-4 rounded-xl bg-white shadow max-w-md">
+      <ServiceSelector
+        services={services}
+        selectedService={selectedService}
+        onSelect={setSelectedService}
       />
 
-      <BookButton
-        service={service}
-        time={time}
-        disabled={!time}
-      />
+      {selectedService && (
+        <>
+          <TimeSlotPicker
+            service={selectedService}
+            selectedTime={selectedTime}
+            onSelect={setSelectedTime}
+            mockBookedSlots={["10:00", "13:00"]} // Storybook demo
+          />
+          <BookButton service={selectedService} time={selectedTime} mockStripe={mockStripe} />
+        </>
+      )}
     </div>
   )
 }
