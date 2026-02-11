@@ -4,9 +4,9 @@ import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 
 /* Webhook to handle Stripe events */
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export async function POST(req: Request) {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
   const body = await req.text()
   const headerList = await headers()
   const sig = headerList.get("stripe-signature")

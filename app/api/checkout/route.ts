@@ -2,10 +2,9 @@ import { prisma } from "@/lib/prisma"
 import Stripe from "stripe"
 import { NextResponse } from "next/server"
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
-
 export async function POST(req: Request) {
   try {
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
     const body = await req.json()
     const { serviceName, price, bookingTime, customerEmail } = body
 
