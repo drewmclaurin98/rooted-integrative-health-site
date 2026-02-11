@@ -19,13 +19,17 @@ type Props = {
 export function BookingWidget({ services, mockStripe }: Props) {
   const [selectedService, setSelectedService] = useState<BookingService | null>(null)
   const [selectedTime, setSelectedTime] = useState<string | null>(null)
+  const [customerEmail, setCustomerEmail] = useState("")
 
   return (
     <div className="space-y-4 p-4 rounded-xl bg-white shadow max-w-md">
       <ServiceSelector
         services={services}
         selectedService={selectedService}
-        onSelect={setSelectedService}
+        onSelect={(s) => {
+          setSelectedService(s)
+          setSelectedTime(null)
+        }}
       />
 
       {selectedService && (
@@ -34,9 +38,28 @@ export function BookingWidget({ services, mockStripe }: Props) {
             service={selectedService}
             selectedTime={selectedTime}
             onSelect={setSelectedTime}
-            mockBookedSlots={["10:00", "13:00"]} // Storybook demo
+            mockBookedSlots={mockStripe ? ["10:00", "13:00"] : undefined}
           />
-          <BookButton service={selectedService} time={selectedTime} mockStripe={mockStripe} />
+
+          {selectedTime && (
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Your email:</label>
+              <input
+                type="email"
+                placeholder="you@example.com"
+                value={customerEmail}
+                onChange={(e) => setCustomerEmail(e.target.value)}
+                className="border border-slate-300 rounded-lg px-3 py-2 w-full"
+              />
+            </div>
+          )}
+
+          <BookButton
+            service={selectedService}
+            time={selectedTime}
+            customerEmail={customerEmail}
+            mockStripe={mockStripe}
+          />
         </>
       )}
     </div>

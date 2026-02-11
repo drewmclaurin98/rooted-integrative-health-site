@@ -12,6 +12,9 @@ export async function POST(req: Request) {
     if (!serviceName || !price || !bookingTime)
       return NextResponse.json({ error: "Missing parameters" }, { status: 400 })
 
+    if (isNaN(new Date(bookingTime).getTime()))
+      return NextResponse.json({ error: "Invalid booking time" }, { status: 400 })
+
     // Check if slot already booked
     const existing = await prisma.booking.findFirst({
       where: { bookingTime: new Date(bookingTime), serviceName, status: "confirmed" },
@@ -33,6 +36,7 @@ export async function POST(req: Request) {
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
+      customer_email: customerEmail || undefined,
       line_items: [
         {
           price_data: {
