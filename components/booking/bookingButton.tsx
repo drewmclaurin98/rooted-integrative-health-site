@@ -57,7 +57,7 @@ export function BookButton({ service, time, customerEmail, mockStripe }: Props) 
     <div>
       <button
         onClick={handleBooking}
-        disabled={!time || loading}
+        disabled={!time || loading || !customerEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail)}
         className="w-full rounded-lg px-6 py-3 text-white bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-400"
       >
         {loading ? "Processing..." : `Book & Pay $${service.price}`}

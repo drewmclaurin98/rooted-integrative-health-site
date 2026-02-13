@@ -6,10 +6,10 @@ import { defineConfig } from "prisma/config"
 const isProd = process.env.NODE_ENV === "production"
 
 export default defineConfig({
-  schema: "prisma/schema.prisma",
+  schema: "./schema.prisma",
   datasource: {
     url: isProd
       ? process.env.TURSO_DATABASE_URL
-      : "file:./dev.db",
+      : "file:../dev.db",
   },
 })

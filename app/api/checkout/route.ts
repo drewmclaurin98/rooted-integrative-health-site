@@ -14,21 +14,32 @@ export async function POST(req: Request) {
     if (isNaN(new Date(bookingTime).getTime()))
       return NextResponse.json({ error: "Invalid booking time" }, { status: 400 })
 
-    // Check if slot already booked
+    // Check if slot is already taken by a confirmed booking or a non-expired pending booking
     const existing = await prisma.booking.findFirst({
-      where: { bookingTime: new Date(bookingTime), serviceName, status: "confirmed" },
+      where: {
+        bookingTime: new Date(bookingTime),
+        serviceName,
+        OR: [
+          { status: "confirmed" },
+          { status: "pending", expiresAt: { gt: new Date() } },
+        ],
+      },
     })
     if (existing) return NextResponse.json({ error: "Slot already booked" }, { status: 400 })
 
-    // Create pending booking
-    const booking = await prisma.booking.create({
-      data: { serviceName, price, bookingTime: new Date(bookingTime), customerEmail },
-    })
+    // Create pending booking with 30-minute expiry (Stripe requires expires_at >= 30 min)
+    const expiresAt = new Date(Date.now() + 30 * 60 * 1000)
 
-    // Stripe checkout
-    if (!process.env.STRIPE_SECRET_KEY) {
-      return NextResponse.json({ url: "https://checkout.stripe.com/mock_session" })
-    }
+    const booking = await prisma.booking.create({
+      data: {
+        serviceName,
+        price,
+        bookingTime: new Date(bookingTime),
+        customerEmail: customerEmail || null,
+        status: "pending",
+        expiresAt,
+      },
+    })
 
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
 
@@ -46,9 +57,12 @@ export async function POST(req: Request) {
           quantity: 1,
         },
       ],
-      metadata: { bookingId: String(booking.id) },
+      metadata: {
+        bookingId: String(booking.id),
+      },
+      expires_at: Math.floor(expiresAt.getTime() / 1000),
       success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${baseUrl}/cancel`,
+      cancel_url: `${baseUrl}/cancel?bookingId=${booking.id}`,
     })
 
     return NextResponse.json({ url: session.url })

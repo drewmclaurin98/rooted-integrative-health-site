@@ -36,11 +36,24 @@ export async function POST(req: Request) {
     if (bookingId) {
       await prisma.booking.update({
         where: { id: Number(bookingId) },
-        data: { status: "confirmed" },
+        data: { status: "confirmed", expiresAt: null },
       })
+      console.log("Booking confirmed:", bookingId)
     }
 
     console.log("Payment confirmed:", session.id)
+  }
+
+  if (event.type === "checkout.session.expired") {
+    const session = event.data.object as Stripe.Checkout.Session
+    const bookingId = session.metadata?.bookingId
+
+    if (bookingId) {
+      await prisma.booking.delete({
+        where: { id: Number(bookingId) },
+      })
+      console.log("Pending booking deleted (session expired):", bookingId)
+    }
   }
 
   return NextResponse.json({ received: true })
