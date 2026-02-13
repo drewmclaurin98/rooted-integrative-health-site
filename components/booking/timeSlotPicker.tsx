@@ -15,13 +15,23 @@ function formatTime(iso: string): string {
 
 function todayString(): string {
   const d = new Date()
-  return d.toISOString().split("T")[0]
+  const year = d.getFullYear()
+  const month = String(d.getMonth() + 1).padStart(2, "0")
+  const day = String(d.getDate()).padStart(2, "0")
+  return `${year}-${month}-${day}`
+}
+
+function getTimezoneAbbr(): string {
+  return new Intl.DateTimeFormat("en-US", { timeZoneName: "short" })
+    .formatToParts(new Date())
+    .find((p) => p.type === "timeZoneName")?.value || ""
 }
 
 export function TimeSlotPicker({ service, selectedTime, onSelect, mockBookedSlots }: Props) {
   const [selectedDate, setSelectedDate] = useState("")
   const [availableSlots, setAvailableSlots] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
+  const tzAbbr = getTimezoneAbbr()
 
   useEffect(() => {
     if (mockBookedSlots) {
@@ -64,7 +74,7 @@ export function TimeSlotPicker({ service, selectedTime, onSelect, mockBookedSlot
 
       {(selectedDate || mockBookedSlots) && (
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Select a time:</label>
+          <label className="block text-sm font-medium text-slate-700 mb-1">Select a time ({tzAbbr}):</label>
           {loading ? (
             <p className="text-slate-500 text-sm">Loading available times...</p>
           ) : availableSlots.length === 0 ? (

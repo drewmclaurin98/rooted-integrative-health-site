@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server"
 import { getAvailableSlots } from "@/lib/availability"
 import { prisma } from "@/lib/prisma"
+import { midnightInTimezone } from "@/lib/timezone"
+import { PRACTITIONER_TIMEZONE } from "@/lib/config"
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url)
@@ -11,22 +13,25 @@ export async function GET(req: Request) {
     return NextResponse.json({ error: "Missing date parameter" }, { status: 400 })
   }
 
-  const date = new Date(dateStr + "T00:00:00")
-  if (isNaN(date.getTime())) {
+  // Validate date format
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
     return NextResponse.json({ error: "Invalid date" }, { status: 400 })
   }
 
-  const allSlots = getAvailableSlots(date, 9, 17, duration)
+  const allSlots = getAvailableSlots(dateStr, 9, 17, duration)
 
-  // Query existing bookings for this date
-  const startOfDay = new Date(date)
-  startOfDay.setHours(0, 0, 0, 0)
-  const endOfDay = new Date(date)
-  endOfDay.setHours(23, 59, 59, 999)
+  // Compute day boundaries in the practitioner's timezone
+  const startOfDay = midnightInTimezone(dateStr, PRACTITIONER_TIMEZONE)
+
+  // End of day = next day's midnight
+  const [year, month, day] = dateStr.split("-").map(Number)
+  const nextDay = new Date(Date.UTC(year, month - 1, day + 1))
+  const nextDayStr = nextDay.toISOString().split("T")[0]
+  const endOfDay = midnightInTimezone(nextDayStr, PRACTITIONER_TIMEZONE)
 
   const existingBookings = await prisma.booking.findMany({
     where: {
-      bookingTime: { gte: startOfDay, lte: endOfDay },
+      bookingTime: { gte: startOfDay, lt: endOfDay },
       status: { in: ["pending", "confirmed"] },
     },
     select: { bookingTime: true },
