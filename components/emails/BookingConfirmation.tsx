@@ -1,4 +1,6 @@
 // emails/BookingConfirmation.tsx
+import { PRACTITIONER_TIMEZONE } from "@/lib/config"
+
 export function BookingConfirmation({
   name,
   service,
@@ -12,7 +14,13 @@ export function BookingConfirmation({
     <div>
       <h1>Booking Confirmed</h1>
       <p>{service}</p>
-      <p>{new Date(time).toLocaleString()}</p>
+      <p>
+        {new Date(time).toLocaleString("en-US", {
+          timeZone: PRACTITIONER_TIMEZONE,
+          dateStyle: "full",
+          timeStyle: "short",
+        })}
+      </p>
     </div>
   )
 }
