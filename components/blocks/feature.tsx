@@ -18,7 +18,7 @@ export function Feature() {
             </h1>
             {/* Subtext */}
             <p className="mb-8 text-lg sm:text-lg text-gray-700 leading-relaxed">
-              TODO: Add qaulifications and experience here.
+              Caitlin has been a patient of NIS growing up. NIS has helped both Caitlin and her family members on many health problems throughout the years. She was inspired by her Mentor and NIS practitioner Dan Lane. NIS (Neurolink) is a technique developed by Dr. Alan Phillips in New Zealand. Caitlin loves the fact that NIS can work to heal different conditions that modern medicine has no answer to. The goal with NIS is to find functions in the body that seem to be not running as they have been or should, there must be a disconnect between your brain, nerves, and area of function, so my goal is to reconnect the function. I have seen NIS work to identify and fix health related issues for people who have spent time and money at multiple healthcare providers attempting to help treat their condition.
             </p>
           </div>
 
