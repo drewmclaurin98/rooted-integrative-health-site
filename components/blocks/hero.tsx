@@ -28,7 +28,7 @@ export function Hero() {
             </div>
 
             {/* Subtext */}
-            <p className="mb-8 text-lg sm:text-lg text-gray-700 leading-relaxed">
+            <p className="mb-8 text-md text-gray-700 leading-relaxed">
               Experience integrative medicine that combines the best of conventional and natural healing. 
               We will work with you to address the root causes of health challenges 
               and support your body's natural ability to heal.
@@ -58,13 +58,13 @@ export function Hero() {
             </div>
           </div>
           {/* Right: Hero Image */}
-          <div className="w-full">
+          <div className="relative w-full h-[340px] sm:h-[420px] rounded-2xl shadow-xl overflow-hidden ring-1 ring-black/5">
             <Image
               src="/nis-color.jpg"
               alt="Neurological Integrative Systems illustration"
-              width={400}
-              height={500}
-              className="w-full h-auto object-cover"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
               priority
             />
           </div>

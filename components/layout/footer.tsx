@@ -39,7 +39,7 @@ export function Footer() {
           <div>
             <h4 className="text-sm font-medium mb-2">Connect</h4>
             <a
-              href="https://instagram.com/yourhandle"
+              href="https://instagram.com/rootedintegrative"
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:underline"
@@ -55,7 +55,7 @@ export function Footer() {
         {/* Disclaimer Section */}
         <div>
           <p className="text-sm text-gray-600">
-            Caitlin McLaurin is a Registered Nurse and Certified NIS practitioner, not a doctor, and as such is not a substitute for diagnosis and treatment by a qualified, licensed, medical professional. The purpose of NIS is to help restore normal physiological function, and is not intended to diagnose, treat, cure, or prevent any disease. Any information given is offered as personal opinion and suggestion, not diagnosis. Any nutritional supplements, dietary advice, and/or home care suggestions are offered as personal recommendations, not a prescription. Daniel Lane is not a doctor, and makes no claims for any cures and/or diagnosis either stated or implied and assumes no liability for the use of any information disclosed. The above disclaimer applies to information discussed during an office visit, via phone or email correspondence, or correspondence via any other media or means.
+            Caitlin McLaurin is a Registered Nurse and Certified NIS practitioner, not a doctor, and as such is not a substitute for diagnosis and treatment by a qualified, licensed, medical professional. The purpose of NIS is to help restore normal physiological function, and is not intended to diagnose, treat, cure, or prevent any disease. Any information given is offered as personal opinion and suggestion, not diagnosis. Any nutritional supplements, dietary advice, and/or home care suggestions are offered as personal recommendations, not a prescription. Caitlin McLaurin is not a doctor, and makes no claims for any cures and/or diagnosis either stated or implied and assumes no liability for the use of any information disclosed. The above disclaimer applies to information discussed during an office visit, via phone or email correspondence, or correspondence via any other media or means.
           </p>
         </div>
 

@@ -10,13 +10,13 @@ export function Feature() {
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left: Featured Image */}
-          <div className="w-full">
+          <div className="relative w-full h-[380px] sm:h-[480px] rounded-2xl shadow-xl overflow-hidden ring-1 ring-black/5">
             <Image
               src="/nis-gray.jpg"
               alt="Neurological Integrative Systems illustration"
-              width={600}
-              height={800}
-              className="w-full h-auto rounded-2xl shadow-xl"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover"
             />
           </div>
           {/* Right: Content */}
@@ -26,7 +26,7 @@ export function Feature() {
               Caitlin McLaurin | NIS Practioner
             </h1>
             {/* Subtext */}
-            <p className="mb-8 text-lg sm:text-lg text-gray-700 leading-relaxed">
+            <p className="mb-8 text-md text-gray-700 leading-relaxed">
               Caitlin has been a patient of NIS growing up. NIS has helped both Caitlin and her family members on many health problems throughout the years. She was inspired by her Mentor and NIS practitioner Dan Lane. NIS (Neurolink) is a technique developed by Dr. Alan Phillips in New Zealand. Caitlin loves the fact that NIS can work to heal different conditions that modern medicine has no answer to. The goal with NIS is to find functions in the body that seem to be not running as they have been or should, there must be a disconnect between your brain, nerves, and area of function, so my goal is to reconnect the function. I have seen NIS work to identify and fix health related issues for people who have spent time and money at multiple healthcare providers attempting to help treat their condition.
             </p>
           </div>
