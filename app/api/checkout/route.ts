@@ -14,6 +14,9 @@ export async function POST(req: Request) {
     if (isNaN(new Date(bookingTime).getTime()))
       return NextResponse.json({ error: "Invalid booking time" }, { status: 400 })
 
+    if (new Date(bookingTime) <= new Date())
+      return NextResponse.json({ error: "Cannot book a time in the past" }, { status: 400 })
+
     // Check if slot is already taken by a confirmed booking or a non-expired pending booking
     const existing = await prisma.booking.findFirst({
       where: {
@@ -41,7 +44,13 @@ export async function POST(req: Request) {
       },
     })
 
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+    const origin = req.headers.get("origin")
+    const host = req.headers.get("host")
+    const baseUrl =
+      origin ||
+      (host ? `https://${host}` : null) ||
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      "http://localhost:3000"
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],

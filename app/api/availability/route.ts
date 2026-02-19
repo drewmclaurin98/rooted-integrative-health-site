@@ -44,7 +44,10 @@ export async function GET(req: Request) {
     existingBookings.map((b) => b.bookingTime.toISOString())
   )
 
-  const available = allSlots.filter((slot) => !bookedTimes.has(slot))
+  const now = new Date().toISOString()
+  const available = allSlots
+    .filter((slot) => !bookedTimes.has(slot))
+    .filter((slot) => slot > now)
 
   return NextResponse.json({ slots: available })
 }
