@@ -10,18 +10,24 @@ export function ServiceSelector({ services, selectedService, onSelect }: Props) 
   return (
     <div className="space-y-2">
       <label className="text-lg font-medium">Select a service:</label>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col md:flex-row gap-3">
         {services.map((s) => (
           <button
             key={s.name}
-            className={`px-4 py-2 rounded-lg border ${
+            className={`rounded-xl border p-4 cursor-pointer text-left w-full transition-all ${
               selectedService?.name === s.name
-                ? "bg-emerald-600 text-white border-emerald-700"
-                : "bg-white border-slate-300 hover:bg-emerald-50"
+                ? "bg-gradient-primary-start border-primary ring-2 ring-primary/20"
+                : "bg-white border-border hover:border-primary hover:bg-gradient-primary-start"
             }`}
             onClick={() => onSelect(s)}
           >
-            {s.name} — ${s.price} ({s.duration} min)
+            <p className="text-base font-semibold text-[#2F3231]">{s.name}</p>
+            {s.description && (
+              <p className="text-sm text-background-muted mt-0.5">{s.description}</p>
+            )}
+            <p className="text-sm font-medium text-primary mt-3">
+              ${s.price} &middot; {s.duration} min
+            </p>
           </button>
         ))}
       </div>

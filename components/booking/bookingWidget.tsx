@@ -9,6 +9,7 @@ export type BookingService = {
   name: string
   price: number
   duration: number
+  description?: string
 }
 
 type Props = {
@@ -22,7 +23,7 @@ export function BookingWidget({ services, mockStripe }: Props) {
   const [customerEmail, setCustomerEmail] = useState("")
 
   return (
-    <div className="space-y-4 p-4 rounded-xl bg-white shadow max-w-md">
+    <div className="space-y-4 p-4 rounded-xl bg-white shadow max-w-6xl">
       <ServiceSelector
         services={services}
         selectedService={selectedService}
@@ -43,13 +44,13 @@ export function BookingWidget({ services, mockStripe }: Props) {
 
           {selectedTime && (
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Your email:</label>
+              <label className="block text-sm font-medium text-[#5F6160] mb-1">Your email:</label>
               <input
                 type="email"
                 placeholder="you@example.com"
                 value={customerEmail}
                 onChange={(e) => setCustomerEmail(e.target.value)}
-                className="border border-slate-300 rounded-lg px-3 py-2 w-full"
+                className="border border-border rounded-lg px-3 py-2 w-full focus:border-border-focus focus:outline-none"
               />
             </div>
           )}

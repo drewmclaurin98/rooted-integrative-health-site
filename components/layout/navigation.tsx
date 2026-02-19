@@ -18,7 +18,7 @@ const CTA_LINK = {
   label: 'Book Appointment',
 }
 
-const INSTAGRAM_URL = 'https://www.instagram.com/yourhandle'
+const INSTAGRAM_URL = 'https://www.instagram.com/rootedintegrative'
 
 /* -----------------------------
    Shared styles
