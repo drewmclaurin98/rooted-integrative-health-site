@@ -23,11 +23,11 @@ export function Feature() {
           <div className="flex flex-col justify-center">
             {/* Headline */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 leading-tight">
-              Caitlin McLaurin | NIS Practioner
+              Caitlin McLaurin | Certified NIS Practitioner
             </h1>
             {/* Subtext */}
             <p className="mb-8 text-md text-gray-700 leading-relaxed">
-              Caitlin has been a patient of NIS growing up. NIS has helped both Caitlin and her family members on many health problems throughout the years. She was inspired by her Mentor and NIS practitioner Dan Lane. NIS (Neurolink) is a technique developed by Dr. Alan Phillips in New Zealand. Caitlin loves the fact that NIS can work to heal different conditions that modern medicine has no answer to. The goal with NIS is to find functions in the body that seem to be not running as they have been or should, there must be a disconnect between your brain, nerves, and area of function, so my goal is to reconnect the function. I have seen NIS work to identify and fix health related issues for people who have spent time and money at multiple healthcare providers attempting to help treat their condition.
+              Caitlin McLaurin is a certified Neurological Integrative Systems (NIS) practitioner trained through the Neurolink Institute, founded by Dr. Allan Phillips in New Zealand. Having experienced the benefits of NIS firsthand throughout her own health journey, she was inspired by her mentor and practitioner Dan Lane to pursue formal training and bring this assessment approach to her community. Caitlin&apos;s practice focuses on identifying disruptions in neurological communication that may be contributing to a range of health concerns — and supporting the body&apos;s ability to self-regulate. She has worked with clients presenting a variety of complex conditions for which conventional medicine provided limited solutions.
             </p>
           </div>
         </div>

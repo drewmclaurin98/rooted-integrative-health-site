@@ -1,0 +1,58 @@
+const faqs = [
+  {
+    question: 'Is NIS a medical treatment?',
+    answer:
+      'NIS is not a medical treatment and does not diagnose, treat, or cure any medical condition. It is a wellness assessment approach that aims to support neurological communication and the body\'s natural regulatory processes. It is not a substitute for medical care.',
+  },
+  {
+    question: 'Is it safe?',
+    answer:
+      'Yes. NIS sessions are non-invasive and involve only light touch. There are no needles, medications, or physical manipulation. Sessions are generally well-tolerated by all ages.',
+  },
+  {
+    question: 'Does it hurt?',
+    answer:
+      'No. The assessment involves gentle pressure at specific neurological points. Most clients report the experience as comfortable and relaxing.',
+  },
+  {
+    question: 'How many sessions are typically recommended?',
+    answer:
+      'This varies depending on your concerns and how your body responds. Many clients begin to notice changes within the first few sessions. Your practitioner will discuss a recommended frequency after your initial assessment.',
+  },
+  {
+    question: 'Is NIS covered by insurance?',
+    answer:
+      'NIS sessions are typically not covered by health insurance in Minnesota, as it is considered a wellness service rather than a medical treatment. Payment plans and pricing will be provided at the time of booking. We recommend contacting your insurer directly if you have specific coverage questions.',
+  },
+]
+
+export function FAQ() {
+  return (
+    <section className="py-12 sm:py-20 bg-white">
+      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-10 leading-tight">
+          Frequently Asked Questions
+        </h2>
+
+        <div className="divide-y divide-gray-200 border-t border-gray-200">
+          {faqs.map((faq) => (
+            <details key={faq.question} className="group py-5">
+              <summary className="flex cursor-pointer items-center justify-between gap-4 text-gray-900 font-medium text-base select-none list-none [&::-webkit-details-marker]:hidden">
+                {faq.question}
+                <svg
+                  className="w-5 h-5 flex-shrink-0 text-gray-400 transition-transform group-open:rotate-180"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </summary>
+              <p className="mt-4 text-sm text-gray-600 leading-relaxed">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}

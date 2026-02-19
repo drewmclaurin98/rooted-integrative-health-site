@@ -23,15 +23,13 @@ export function Hero() {
               />
 
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
-                Neurological Integrative Systems
+                Supporting Neurological Balance for Lasting Health
               </h1>
             </div>
 
             {/* Subtext */}
             <p className="mb-8 text-md text-gray-700 leading-relaxed">
-              Experience integrative medicine that combines the best of conventional and natural healing. 
-              We will work with you to address the root causes of health challenges 
-              and support your body's natural ability to heal.
+              Certified Neurological Integrative Systems (NIS) Practitioner providing in-person sessions in St. Paul, MN.
             </p>
 
             {/* CTA Buttons */}
@@ -40,7 +38,7 @@ export function Hero() {
                 href="/booking"
                 className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
               >
-                Book Appointment
+                Schedule an Appointment
                 <svg
                   className="ml-2 w-5 h-5"
                   fill="none"
@@ -54,6 +52,12 @@ export function Hero() {
                     d="M13 7l5 5m0 0l-5 5m5-5H6"
                   />
                 </svg>
+              </Link>
+              <Link
+                href="#what-is-nis"
+                className="inline-flex items-center justify-center px-8 py-4 border-2 border-primary text-primary font-semibold rounded-lg transition-colors duration-200 hover:bg-primary/10"
+              >
+                What Is NIS?
               </Link>
             </div>
           </div>
