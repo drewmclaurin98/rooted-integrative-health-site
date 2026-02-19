@@ -58,7 +58,7 @@ export function TimeSlotPicker({ service, selectedTime, onSelect, mockBookedSlot
     <div className="space-y-3">
       {!mockBookedSlots && (
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Select a date:</label>
+          <label className="block text-sm font-medium text-[#5F6160] mb-1">Select a date:</label>
           <input
             type="date"
             min={todayString()}
@@ -67,18 +67,18 @@ export function TimeSlotPicker({ service, selectedTime, onSelect, mockBookedSlot
               setSelectedDate(e.target.value)
               onSelect("") // reset time when date changes
             }}
-            className="border border-slate-300 rounded-lg px-3 py-2 w-full"
+            className="border border-border rounded-lg px-3 py-2 w-full focus:border-border-focus focus:outline-none"
           />
         </div>
       )}
 
       {(selectedDate || mockBookedSlots) && (
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-1">Select a time ({tzAbbr}):</label>
+          <label className="block text-sm font-medium text-[#5F6160] mb-1">Select a time ({tzAbbr}):</label>
           {loading ? (
-            <p className="text-slate-500 text-sm">Loading available times...</p>
+            <p className="text-background-muted text-sm">Loading available times...</p>
           ) : availableSlots.length === 0 ? (
-            <p className="text-slate-500 text-sm">No available times for this date.</p>
+            <p className="text-background-muted text-sm">No available times for this date.</p>
           ) : (
             <div className="flex flex-wrap gap-2">
               {availableSlots.map((slot) => (
@@ -86,8 +86,8 @@ export function TimeSlotPicker({ service, selectedTime, onSelect, mockBookedSlot
                   key={slot}
                   className={`px-3 py-1 border rounded ${
                     selectedTime === slot
-                      ? "bg-emerald-600 text-white"
-                      : "bg-white border-slate-300 hover:bg-emerald-50"
+                      ? "bg-primary text-white"
+                      : "bg-white border-border hover:bg-gradient-primary-start"
                   }`}
                   onClick={() => onSelect(slot)}
                 >
