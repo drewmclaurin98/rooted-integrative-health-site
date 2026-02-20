@@ -5,7 +5,7 @@ export function Footer() {
     <footer className="bg-background-surface text-gray-700">
       <div className="flex flex-col gap-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Main footer content: 3-column layout (Navigation, Contact, Social) */}
-        <div className="flex flex-row md:flex-row justify-between gap-8 pb-4">
+        <div className="flex flex-col text-center sm:text-left sm:flex-row justify-between gap-8 pb-4">
           {/* Left Column: Navigation Links */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Navigation</h3>
