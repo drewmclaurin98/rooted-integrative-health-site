@@ -12,8 +12,8 @@ export function Feature() {
           {/* Left: Featured Image */}
           <div className="relative w-full h-[380px] sm:h-[480px] rounded-2xl shadow-xl overflow-hidden ring-1 ring-black/5">
             <Image
-              src="/nis-gray.jpg"
-              alt="Neurological Integrative Systems illustration"
+              src="/caitlin-headshot.jpeg"
+              alt="Caitlin McLaurin, Certified NIS Practitioner"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
