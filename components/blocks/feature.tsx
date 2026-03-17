@@ -16,7 +16,7 @@ export function Feature() {
               alt="Caitlin McLaurin, Certified NIS Practitioner"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
+              className="object-cover object-top"
             />
           </div>
           {/* Right: Content */}
