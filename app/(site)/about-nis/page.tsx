@@ -205,6 +205,7 @@ export default function AboutNISPage() {
               title="What is NIS - Neurological Integration System"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
+              loading="lazy"
             />
           </div>
         </div>
