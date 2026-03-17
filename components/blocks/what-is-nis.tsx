@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export function WhatIsNIS() {
   return (
     <section id="what-is-nis" className="py-12 sm:py-20 bg-gray-50">
@@ -52,6 +54,18 @@ export function WhatIsNIS() {
               The goal is to restore the body&apos;s own ability to regulate and maintain healthy function.
             </p>
           </div>
+        </div>
+
+        <div className="mt-10">
+          <Link
+            href="/about-nis"
+            className="inline-flex items-center text-primary font-semibold hover:underline"
+          >
+            Learn More
+            <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </Link>
         </div>
       </div>
     </section>
