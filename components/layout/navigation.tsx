@@ -9,13 +9,14 @@ import Image from 'next/image'
 ------------------------------ */
 
 const NAV_LINKS = [
-  { href: '/about-nis', label: 'About NIS' },
-  { href: '/services', label: 'Services' },
+  { href: '/about-nis', label: 'About NIS', ariaLabel: 'Learn about NIS treatment' },
+  { href: '/services', label: 'Services', ariaLabel: 'View our services' },
 ]
 
 const CTA_LINK = {
   href: '/booking',
   label: 'Book Appointment',
+  ariaLabel: 'Book an appointment',
 }
 
 const INSTAGRAM_URL = 'https://www.instagram.com/rootedintegrative'
@@ -64,6 +65,7 @@ function NavLinks({ onClick }: { onClick?: () => void }) {
           href={link.href}
           className={linkDefault}
           onClick={onClick}
+          aria-label={link.ariaLabel}
         >
           {link.label}
         </Link>
@@ -73,6 +75,7 @@ function NavLinks({ onClick }: { onClick?: () => void }) {
         href={CTA_LINK.href}
         className={linkCTA}
         onClick={onClick}
+        aria-label={CTA_LINK.ariaLabel}
       >
         {CTA_LINK.label}
       </Link>
@@ -95,7 +98,11 @@ export function Navigation() {
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center flex-shrink-0">
+          <Link
+            href="/"
+            className="flex items-center flex-shrink-0"
+            aria-label="Rooted Integrative Health – Home"
+          >
             <Image
               src="/rih-square-no-title.png"
               alt="Rooted Integrative Health"
@@ -115,7 +122,7 @@ export function Navigation() {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Instagram"
+              aria-label="Follow Rooted Integrative Health on Instagram (opens in a new tab)"
               className="flex items-center px-2 py-2 rounded-md text-gray-700 hover:text-primary hover:bg-background-page transition"
             >
               <InstagramIcon />
@@ -128,7 +135,7 @@ export function Navigation() {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Instagram"
+              aria-label="Follow Rooted Integrative Health on Instagram (opens in a new tab)"
               className="flex items-center px-2 py-2 rounded-md text-gray-700 hover:text-primary hover:bg-background-page transition"
             >
               <InstagramIcon />

@@ -252,6 +252,7 @@ export default function AboutNISPage() {
           <Link
             href="/booking"
             className="inline-flex items-center justify-center px-8 py-4 bg-white text-primary font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-200"
+            aria-label="Book an appointment"
           >
             Book an Appointment
           </Link>

@@ -11,17 +11,17 @@ export function Footer() {
             <h3 className="text-lg font-semibold mb-4">Navigation</h3>
             <ul className="space-y-2">
               <li>
-                <Link href="/about-nis" className="hover:text-primary">
+                <Link href="/about-nis" className="hover:text-primary" aria-label="Learn about NIS treatment">
                   About NIS
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="hover:text-primary">
+                <Link href="/services" className="hover:text-primary" aria-label="View our services">
                   Services
                 </Link>
               </li>
               <li>
-                <Link href="/booking" className="hover:text-primary">
+                <Link href="/booking" className="hover:text-primary" aria-label="Book an appointment">
                   Book Appointment
                 </Link>
               </li>
@@ -43,6 +43,7 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               className="text-primary hover:underline"
+              aria-label="Follow Rooted Integrative Health on Instagram (opens in a new tab)"
             >
               Instagram
             </a>

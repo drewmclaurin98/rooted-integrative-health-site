@@ -17,6 +17,7 @@ export default function SuccessPage() {
           <Link
             href="/"
             className="inline-block rounded-lg px-6 py-3 text-white bg-emerald-600 hover:bg-emerald-700"
+            aria-label="Return to home page"
           >
             Return Home
           </Link>

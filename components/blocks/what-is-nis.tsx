@@ -60,9 +60,10 @@ export function WhatIsNIS() {
           <Link
             href="/about-nis"
             className="inline-flex items-center text-primary font-semibold hover:underline"
+            aria-label="Learn more about NIS treatment"
           >
             Learn More
-            <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
           </Link>
