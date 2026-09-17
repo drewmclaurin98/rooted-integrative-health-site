@@ -61,7 +61,7 @@ export function Footer() {
         </div>
 
         {/* Copyright Footer */}
-        <div className="text-sm text-gray-500 text-center">© {new Date().getFullYear()} Rooted Integrative Health</div>
+        <div className="text-sm text-gray-600 text-center">© {new Date().getFullYear()} Rooted Integrative Health</div>
       </div>
     </footer>
   )

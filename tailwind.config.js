@@ -9,9 +9,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "primary": "#719CA6",
-        "primary-hover": "#5E8A94",
-        "primary-active": "#4B7179",
+        "primary": "#4B7179",
+        "primary-hover": "#3E5D64",
+        "primary-active": "#314A50",
         "primary-light": "#A9C5CD",
 
         "accent": "#755E52",
@@ -22,7 +22,7 @@ module.exports = {
         "background-muted": "#7E817E",
 
         "border": "#D1D3D1",
-        "border-focus": "#719CA6",
+        "border-focus": "#4B7179",
 
         "success": "#5F9C86",
         "warning": "#C29A5C",
