@@ -12,6 +12,22 @@ module.exports = {
         heading: ["var(--font-heading)", "Georgia", "serif"],
       },
       colors: {
+        // Brand-tinted grays (hue toward primary #4B7179). Replaces Tailwind's cool default
+        // gray scale, so every existing text-gray-* / bg-gray-* / border-gray-* class picks it up.
+        // White-contrast: 500 = 4.96:1 (AA small text), 600 = 7.2:1, 700 = 10:1, 900 = 15.7:1.
+        gray: {
+          50: "#F6F8F8",
+          100: "#EDF1F1",
+          200: "#DCE3E4",
+          300: "#C3CDCF",
+          400: "#94A3A6",
+          500: "#627377",
+          600: "#4A5A5E",
+          700: "#36454A",
+          800: "#243236",
+          900: "#18252A",
+          950: "#0C1518",
+        },
         "primary": "#4B7179",
         "primary-hover": "#3E5D64",
         "primary-active": "#314A50",

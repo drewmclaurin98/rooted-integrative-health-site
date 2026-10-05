@@ -7,7 +7,7 @@
   color-scheme: light;
 
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #18252A;
 
   /* Primary */
   --primary-100: #EAF2F4;
@@ -70,6 +70,11 @@ h2,
 h3 {
   font-family: var(--font-heading), Georgia, serif;
   letter-spacing: -0.01em;
+}
+
+::selection {
+  background: #C9DBE0; /* primary-200 */
+  color: #18252A;
 }
 
 body {
