@@ -1,8 +1,14 @@
 import { NextResponse } from "next/server"
-import { openai } from "../../../../lib/ai/client"
-import { componentBuilder } from "@/lib/ai/agents/componentBuilder"
 
+// Developer tool: generates component code with OpenAI. It's disabled in production so
+// the public can't call it and spend the OpenAI key's credits.
 export async function POST(req: Request) {
+  if (process.env.NODE_ENV === "production") {
+    return NextResponse.json({ error: "Not found" }, { status: 404 })
+  }
+
+  const { openai } = await import("@/lib/ai/client")
+  const { componentBuilder } = await import("@/lib/ai/agents/componentBuilder")
   const { request } = await req.json()
 
   const response = await openai.chat.completions.create({

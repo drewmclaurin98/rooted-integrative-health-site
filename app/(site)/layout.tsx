@@ -1,6 +1,4 @@
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/next"
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from "next";
 import { Lato, Lora } from "next/font/google";
 import { Header } from "../../components/layout/header"
@@ -90,8 +88,6 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main>
           {children}
-          <Analytics />
-          <SpeedInsights />
         </main>
         <Footer />
         <RevealInit />
