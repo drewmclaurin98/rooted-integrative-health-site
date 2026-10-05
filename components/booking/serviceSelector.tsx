@@ -13,9 +13,9 @@ export function ServiceSelector({ services, selectedService, onSelect }: Props) 
       <div className="flex flex-col md:flex-row gap-3">
         {services.map((s) => (
           <button
-            key={s.name}
+            key={s.id}
             className={`rounded-xl border p-4 cursor-pointer text-left w-full transition-all ${
-              selectedService?.name === s.name
+              selectedService?.id === s.id
                 ? "bg-gradient-primary-start border-primary ring-2 ring-primary/20"
                 : "bg-white border-border hover:border-primary hover:bg-gradient-primary-start"
             }`}

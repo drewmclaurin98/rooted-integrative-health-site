@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { site } from '@/content/site'
 
 export function Footer() {
   return (
@@ -21,6 +22,16 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/about" className="hover:text-primary" aria-label="About Caitlin McLaurin">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-primary" aria-label="Contact Rooted Integrative Health">
+                  Contact
+                </Link>
+              </li>
+              <li>
                 <Link href="/booking" className="hover:text-primary" aria-label="Book an appointment">
                   Book Appointment
                 </Link>
@@ -31,8 +42,14 @@ export function Footer() {
           {/* Center Column: Contact Information & Hours */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact & Hours</h3>
-            <p className="mb-2">Hours: TBD</p>
-            <p className="mb-4">Location: TBD</p>
+            <p className="mb-2">{site.location.hours}</p>
+            <p className="mb-4">{site.location.city}, {site.location.regionName}</p>
+            <p className="mb-2">
+              <a href={`mailto:${site.contact.email}`} className="hover:text-primary">{site.contact.email}</a>
+            </p>
+            <p>
+              <a href={`tel:+1${site.contact.phone.replace(/[^0-9]/g, '')}`} className="hover:text-primary">{site.contact.phone}</a>
+            </p>
           </div>
 
           {/* Right Column: Social Media Links */}
@@ -61,7 +78,11 @@ export function Footer() {
         </div>
 
         {/* Copyright Footer */}
-        <div className="text-sm text-gray-600 text-center">© {new Date().getFullYear()} Rooted Integrative Health</div>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 text-sm text-gray-600">
+          <span>© {new Date().getFullYear()} Rooted Integrative Health</span>
+          <Link href="/privacy" className="hover:text-primary">Privacy Policy</Link>
+          <Link href="/disclaimer" className="hover:text-primary">Disclaimer</Link>
+        </div>
       </div>
     </footer>
   )

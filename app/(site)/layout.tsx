@@ -4,56 +4,75 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from "next";
 import { Header } from "../../components/layout/header"
 import { Footer } from "../../components/layout/footer"
+import { site } from "@/content/site"
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
 }
 
+const SITE_TITLE = "Rooted Integrative Health | NIS Practitioner in St. Paul, MN"
+const DEFAULT_DESCRIPTION =
+  "Gentle, non-invasive Neurological Integrative Systems (NIS) wellness sessions in St. Paul, Minnesota with Caitlin McLaurin, RN, Certified NIS Practitioner."
+
+// Site-wide defaults. Each page sets its own title, description and canonical URL
+// (a canonical here would point every page at the homepage).
 export const metadata: Metadata = {
-  metadataBase: new URL("https://rootedintegrativehealth.com"),
-  title: "Rooted Integrative Health - NIS",
-  description: "Experience integrative medicine that combines the best of conventional and natural healing. We will work with you to address the root causes of health challenges and support your body's natural ability to heal.",
+  metadataBase: new URL(site.url),
+  title: SITE_TITLE,
+  description: DEFAULT_DESCRIPTION,
   icons: {
     icon: "/rih-square-no-title.png",
     apple: "/rih-square-no-title.png",
   },
-  keywords: ["integrative medicine", "holistic health", "acupuncture", "herbal medicine", "wellness", "natural healing"],
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
   openGraph: {
-    title: "Rooted Integrative Health - NIS",
-    description: "Experience integrative medicine that combines the best of conventional and natural healing. We will work with you to address the root causes of health challenges and support your body's natural ability to heal.",
+    title: SITE_TITLE,
+    description: DEFAULT_DESCRIPTION,
     type: "website",
     locale: "en_US",
-    url: "https://rootedintegrativehealth.com",
-    siteName: "Resilient Integrative Health",
-    images: [
-      {
-        url: "/rih-square-no-title.png",
-        width: 200,
-        height: 200,
-        alt: "RIH Logo",
-      },
-    ],
+    url: site.url,
+    siteName: site.name,
+    images: [{ url: "/rih-square-no-title.png", width: 200, height: 200, alt: `${site.name} logo` }],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "Rooted Integrative Health - NIS",
-    description: "Experience integrative medicine that combines the best of conventional and natural healing. We will work with you to address the root causes of health challenges and support your body's natural ability to heal.",
+    card: "summary",
+    title: SITE_TITLE,
+    description: DEFAULT_DESCRIPTION,
     images: ["/rih-square-no-title.png"],
   },
-  alternates: {
-    canonical: "https://rootedintegrativehealth.com",
+}
+
+// LocalBusiness structured data for Google. Street address, phone and email are
+// added automatically once they're filled in content/site.ts.
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "HealthAndBeautyBusiness",
+  name: site.name,
+  url: site.url,
+  description: DEFAULT_DESCRIPTION,
+  image: `${site.url}/rih-square-no-title.png`,
+  areaServed: { "@type": "City", name: "St. Paul, Minnesota" },
+  address: {
+    "@type": "PostalAddress",
+    ...(site.location.address ? { streetAddress: site.location.address } : {}),
+    addressLocality: site.location.city,
+    addressRegion: site.location.region,
+    addressCountry: "US",
   },
+  ...(site.contact.phone ? { telephone: site.contact.phone } : {}),
+  ...(site.contact.email ? { email: site.contact.email } : {}),
+  sameAs: [site.contact.instagram],
 }
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="font-sans text-slate-900">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
         <Header />
         <main>
           {children}

@@ -6,6 +6,7 @@ import { TimeSlotPicker } from "./timeSlotPicker"
 import { BookButton } from "./bookingButton"
 
 export type BookingService = {
+  id: string
   name: string
   price: number
   duration: number
@@ -15,10 +16,13 @@ export type BookingService = {
 type Props = {
   services: BookingService[]
   mockStripe?: boolean
+  initialServiceId?: string
 }
 
-export function BookingWidget({ services, mockStripe }: Props) {
-  const [selectedService, setSelectedService] = useState<BookingService | null>(null)
+export function BookingWidget({ services, mockStripe, initialServiceId }: Props) {
+  const [selectedService, setSelectedService] = useState<BookingService | null>(
+    () => services.find((s) => s.id === initialServiceId) ?? null
+  )
   const [selectedTime, setSelectedTime] = useState<string | null>(null)
   const [customerEmail, setCustomerEmail] = useState("")
 

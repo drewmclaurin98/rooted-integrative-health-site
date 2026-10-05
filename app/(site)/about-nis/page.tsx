@@ -1,6 +1,12 @@
-'use client'
-
+import type { Metadata } from "next"
 import Link from "next/link"
+
+export const metadata: Metadata = {
+  title: "What Is NIS? | Neurological Integrative Systems | Rooted Integrative Health",
+  description:
+    "Learn how Neurological Integrative Systems (NIS) works: a gentle, non-invasive, assessment-based wellness approach offered by Caitlin McLaurin, RN in St. Paul, Minnesota.",
+  alternates: { canonical: "/about-nis" },
+}
 
 export default function AboutNISPage() {
   return (

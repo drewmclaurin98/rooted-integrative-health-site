@@ -11,6 +11,8 @@ import Image from 'next/image'
 const NAV_LINKS = [
   { href: '/about-nis', label: 'About NIS', ariaLabel: 'Learn about NIS treatment' },
   { href: '/services', label: 'Services', ariaLabel: 'View our services' },
+  { href: '/about', label: 'About', ariaLabel: 'About Caitlin McLaurin' },
+  { href: '/contact', label: 'Contact', ariaLabel: 'Contact Rooted Integrative Health' },
 ]
 
 const CTA_LINK = {
@@ -115,7 +117,7 @@ export function Navigation() {
           </Link>
 
           {/* Desktop navigation */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden lg:flex items-center gap-4">
             <NavLinks />
 
             <Link
@@ -130,7 +132,7 @@ export function Navigation() {
           </div>
 
           {/* Mobile header controls */}
-          <div className="md:hidden flex items-center gap-4">
+          <div className="lg:hidden flex items-center gap-4">
             <Link
               href={INSTAGRAM_URL}
               target="_blank"
@@ -175,7 +177,7 @@ export function Navigation() {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t border-border">
+        <div className="lg:hidden bg-white border-t border-border">
           <div className="px-2 pt-2 pb-3 space-y-1">
             <NavLinks onClick={closeMenu} />
           </div>

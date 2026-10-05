@@ -1,9 +1,14 @@
+import type { Metadata } from "next"
 import { Hero } from "../../components/blocks/hero"
 import { WhatIsNIS } from "../../components/blocks/what-is-nis"
 import { Feature } from "../../components/blocks/feature"
 import { Conditions } from "../../components/blocks/conditions"
 import { WhatToExpect } from "../../components/blocks/what-to-expect"
 import { FAQ } from "../../components/blocks/faq"
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+}
 
 export default function Home() {
   return (
