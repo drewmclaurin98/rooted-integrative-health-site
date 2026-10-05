@@ -29,7 +29,7 @@ export function Hero() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 href="/booking"
-                className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-colors duration-200 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center px-8 py-4 bg-primary hover:bg-primary-hover text-white font-semibold rounded-lg transition-[color,background-color,box-shadow,transform] duration-300 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 shadow-lg hover:shadow-xl"
                 aria-label="Schedule an appointment"
               >
                 Schedule an Appointment
@@ -50,7 +50,7 @@ export function Hero() {
               </Link>
               <Link
                 href="#what-is-nis"
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-primary text-primary font-semibold rounded-lg transition-colors duration-200 hover:bg-primary/10"
+                className="inline-flex items-center justify-center px-8 py-4 border-2 border-primary text-primary font-semibold rounded-lg transition-[color,background-color,box-shadow,transform] duration-300 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0 hover:bg-primary/10"
                 aria-label="Jump to What Is NIS section"
               >
                 What Is NIS?

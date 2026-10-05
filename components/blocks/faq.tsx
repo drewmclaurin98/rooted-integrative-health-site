@@ -40,7 +40,7 @@ export function FAQ() {
           Frequently Asked Questions
         </h2>
 
-        <div className="divide-y divide-gray-200 border-t border-gray-200">
+        <div className="max-w-3xl divide-y divide-gray-200 border-t border-gray-200">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index
             return (

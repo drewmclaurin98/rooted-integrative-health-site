@@ -7,7 +7,7 @@ type Variant = "primary" | "secondary" | "white"
 type Size = "md" | "lg"
 
 const base =
-  "inline-flex items-center justify-center font-semibold rounded-lg transition-colors duration-200"
+  "inline-flex items-center justify-center font-semibold rounded-lg transition-[color,background-color,border-color,box-shadow,transform] duration-300 ease-out motion-safe:hover:-translate-y-0.5 motion-safe:active:translate-y-0"
 
 const variants: Record<Variant, string> = {
   primary: "bg-primary hover:bg-primary-hover text-white shadow-lg hover:shadow-xl",

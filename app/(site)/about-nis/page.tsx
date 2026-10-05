@@ -155,10 +155,12 @@ export default function AboutNISPage() {
           <p className="text-gray-600 text-center max-w-2xl mx-auto mb-14">
             Each NIS session follows a consistent, systematic protocol from start to finish.
           </p>
-          <div className="space-y-6">
+          <ol className="relative max-w-2xl mx-auto space-y-10">
+            {/* Connecting line behind the step numbers */}
+            <div aria-hidden="true" className="absolute left-5 top-5 bottom-5 w-px -translate-x-1/2 bg-primary/25" />
 
-            <div className="flex gap-6 items-start">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center text-sm">1</div>
+            <li data-reveal className="relative flex gap-6 items-start">
+              <div className="relative z-10 flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center text-sm ring-8 ring-white">1</div>
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-1">Assessment</h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -167,10 +169,10 @@ export default function AboutNISPage() {
                   which circuits are not firing correctly — before anything else is done.
                 </p>
               </div>
-            </div>
+            </li>
 
-            <div className="flex gap-6 items-start">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center text-sm">2</div>
+            <li data-reveal style={{ ["--reveal-delay" as string]: "120ms" }} className="relative flex gap-6 items-start">
+              <div className="relative z-10 flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center text-sm ring-8 ring-white">2</div>
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-1">Integration</h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -180,10 +182,10 @@ export default function AboutNISPage() {
                   had stopped monitoring.
                 </p>
               </div>
-            </div>
+            </li>
 
-            <div className="flex gap-6 items-start">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center text-sm">3</div>
+            <li data-reveal style={{ ["--reveal-delay" as string]: "240ms" }} className="relative flex gap-6 items-start">
+              <div className="relative z-10 flex-shrink-0 w-10 h-10 rounded-full bg-primary text-white font-bold flex items-center justify-center text-sm ring-8 ring-white">3</div>
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-1">Restoration</h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -192,8 +194,8 @@ export default function AboutNISPage() {
                   systems simultaneously — without targeting any single symptom in isolation.
                 </p>
               </div>
-            </div>
-          </div>
+            </li>
+          </ol>
         </div>
       </section>
 
