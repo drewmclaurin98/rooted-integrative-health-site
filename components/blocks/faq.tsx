@@ -36,7 +36,7 @@ export function FAQ() {
   return (
     <section className="py-12 sm:py-20 bg-white">
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-10 leading-tight">
+        <h2 data-reveal className="text-3xl sm:text-4xl font-bold text-gray-900 mb-10 leading-tight">
           Frequently Asked Questions
         </h2>
 
@@ -44,7 +44,12 @@ export function FAQ() {
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index
             return (
-              <div key={faq.question} className="py-5">
+              <div
+                key={faq.question}
+                data-reveal
+                style={{ ["--reveal-delay" as string]: `${index * 60}ms` }}
+                className="py-5"
+              >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   className="flex w-full cursor-pointer items-center justify-between gap-4 text-left text-gray-900 font-medium text-base"

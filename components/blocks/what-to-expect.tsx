@@ -2,13 +2,13 @@ export function WhatToExpect() {
   return (
     <section className="py-12 sm:py-20 bg-gray-50">
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-10 leading-tight">
+        <h2 data-reveal className="text-3xl sm:text-4xl font-bold text-gray-900 mb-10 leading-tight">
           What to Expect
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {/* Initial Visit */}
-          <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
+          <div data-reveal style={{ ["--reveal-delay" as string]: "0ms" }} className="lift bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
             <h3 className="text-xl font-semibold text-gray-900 mb-5">Initial Visit</h3>
             <ul className="space-y-3">
               {[
@@ -37,7 +37,7 @@ export function WhatToExpect() {
           </div>
 
           {/* Follow-Up Sessions */}
-          <div className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
+          <div data-reveal style={{ ["--reveal-delay" as string]: "120ms" }} className="lift bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
             <h3 className="text-xl font-semibold text-gray-900 mb-5">Follow-Up Sessions</h3>
             <ul className="space-y-3">
               {[

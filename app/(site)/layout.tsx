@@ -2,14 +2,20 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata, Viewport } from "next";
+import { Lato, Lora } from "next/font/google";
 import { Header } from "../../components/layout/header"
 import { Footer } from "../../components/layout/footer"
 import { site } from "@/content/site"
+import { RevealInit } from "@/components/blocks/reveal-init"
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
 }
+
+// Fonts: Lora for headings (h1–h3 via globals.css), Lato for body text (Tailwind font-sans).
+const lora = Lora({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--font-heading", display: "swap" })
+const lato = Lato({ subsets: ["latin"], weight: ["400", "700"], variable: "--font-body", display: "swap" })
 
 const SITE_TITLE = "Rooted Integrative Health | NIS Practitioner in St. Paul, MN"
 const DEFAULT_DESCRIPTION =
@@ -66,9 +72,17 @@ const structuredData = {
 }
 
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
+  // suppressHydrationWarning: the inline script below adds "reveal-ready" to <html> before React loads.
   return (
-    <html lang="en">
+    <html lang="en" className={`${lora.variable} ${lato.variable}`} suppressHydrationWarning>
       <body className="font-sans text-slate-900">
+        {/* Set the reveal flag before first paint so marked elements start hidden (no flash). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('reveal-ready')}}catch(e){}",
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
@@ -80,6 +94,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
           <SpeedInsights />
         </main>
         <Footer />
+        <RevealInit />
       </body>
     </html>
   )

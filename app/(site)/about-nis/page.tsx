@@ -29,7 +29,7 @@ export default function AboutNISPage() {
       {/* Core Explanation */}
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+          <div data-reveal style={{ ["--reveal-delay" as string]: "100ms" }} className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
             <div>
               <h2 className="text-3xl font-bold text-gray-900 mb-6">The Foundation</h2>
               <p className="text-gray-700 mb-4 leading-relaxed">
@@ -105,11 +105,11 @@ export default function AboutNISPage() {
       {/* The Science */}
       <section className="bg-gray-50 py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">The Science Behind NIS</h2>
+          <h2 data-reveal className="text-3xl font-bold text-gray-900 mb-4 text-center">The Science Behind NIS</h2>
           <p className="text-gray-600 text-center max-w-2xl mx-auto mb-14">
             NIS is grounded in two established principles of neuroscience.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div data-reveal style={{ ["--reveal-delay" as string]: "100ms" }} className="grid grid-cols-1 md:grid-cols-2 gap-8">
 
             {/* Action Potential */}
             <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm">
@@ -151,7 +151,7 @@ export default function AboutNISPage() {
       {/* How a Session Works */}
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">How a Session Works</h2>
+          <h2 data-reveal className="text-3xl font-bold text-gray-900 mb-4 text-center">How a Session Works</h2>
           <p className="text-gray-600 text-center max-w-2xl mx-auto mb-14">
             Each NIS session follows a consistent, systematic protocol from start to finish.
           </p>
@@ -200,7 +200,7 @@ export default function AboutNISPage() {
       {/* Video Section */}
       <section className="bg-gradient-to-br from-gradient-primary-start via-gradient-primary-middle to-gradient-primary-end py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">See NIS in Action</h2>
+          <h2 data-reveal className="text-3xl font-bold text-gray-900 mb-4 text-center">See NIS in Action</h2>
           <p className="text-gray-600 text-center max-w-2xl mx-auto mb-10">
             Watch this overview to see how an NIS session is conducted and what you can expect.
           </p>
@@ -220,12 +220,12 @@ export default function AboutNISPage() {
       {/* Who Can Benefit */}
       <section className="bg-gray-50 py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4 text-center">Who Can Benefit?</h2>
+          <h2 data-reveal className="text-3xl font-bold text-gray-900 mb-4 text-center">Who Can Benefit?</h2>
           <p className="text-gray-600 text-center max-w-2xl mx-auto mb-12">
             Because NIS works at the level of brain-body communication rather than targeting specific
             diagnoses, it can support a wide range of people and presentations.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+          <div data-reveal style={{ ["--reveal-delay" as string]: "100ms" }} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {[
               'Chronic pain or fatigue',
               'Hormonal imbalances',
@@ -251,7 +251,7 @@ export default function AboutNISPage() {
       {/* CTA Section */}
       <section className="bg-primary text-white py-16">
         <div className="max-w-2xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-4">Ready to Experience NIS?</h2>
+          <h2 data-reveal className="text-3xl font-bold mb-4">Ready to Experience NIS?</h2>
           <p className="text-lg mb-8 text-white/90">
             Book a session and see how restoring brain-body communication can support your health.
           </p>

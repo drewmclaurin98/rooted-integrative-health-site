@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-body)", "Helvetica Neue", "Arial", "sans-serif"],
+        heading: ["var(--font-heading)", "Georgia", "serif"],
+      },
       colors: {
         "primary": "#4B7179",
         "primary-hover": "#3E5D64",

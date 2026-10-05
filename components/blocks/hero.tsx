@@ -12,23 +12,16 @@ export function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Left: Content */}
           <div className="flex flex-col justify-center">
-            {/* Logo + Headline */}
-            <div className="mb-8 flex items-center gap-4">
-              <Image
-                src="/logo-v3-no-bg-with-text.png"
-                alt="RIH Logo"
-                width={120}
-                height={120}
-                className="rounded-lg flex-shrink-0"
-              />
-
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
-                Supporting Neurological Balance for Lasting Health
-              </h1>
-            </div>
+            {/* Headline */}
+            <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">
+              NIS · St. Paul, MN
+            </p>
+            <h1 className="mb-6 text-4xl sm:text-5xl font-semibold text-gray-900 leading-[1.1]">
+              Supporting Neurological Balance for Lasting Health
+            </h1>
 
             {/* Subtext */}
-            <p className="mb-8 text-md text-gray-700 leading-relaxed">
+            <p className="mb-8 text-lg text-gray-700 leading-relaxed max-w-xl">
               Certified Neurological Integrative Systems (NIS) Practitioner providing in-person sessions in St. Paul, MN.
             </p>
 
@@ -71,7 +64,7 @@ export function Hero() {
               alt="Neurological Integrative Systems illustration"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
+              className="object-cover hero-settle"
               priority
             />
           </div>

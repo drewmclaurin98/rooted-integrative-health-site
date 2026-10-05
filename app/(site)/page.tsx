@@ -5,6 +5,7 @@ import { Feature } from "../../components/blocks/feature"
 import { Conditions } from "../../components/blocks/conditions"
 import { WhatToExpect } from "../../components/blocks/what-to-expect"
 import { FAQ } from "../../components/blocks/faq"
+import { FinalCta } from "../../components/blocks/final-cta"
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -19,6 +20,7 @@ export default function Home() {
       <Conditions />
       <WhatToExpect />
       <FAQ />
+      <FinalCta />
     </div>
   )
 }

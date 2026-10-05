@@ -9,7 +9,7 @@ type Props = {
 
 export function ServiceCard({ service, ctaText }: Props) {
   return (
-    <div className="flex flex-col bg-white rounded-2xl border border-gray-200 p-8 shadow-sm h-full">
+    <div data-reveal className="lift flex flex-col bg-white rounded-2xl border border-gray-200 p-8 shadow-sm h-full">
       <h3 className="text-xl font-semibold text-gray-900">{service.name}</h3>
       <div className="mt-3 flex items-baseline gap-2">
         <span className="text-4xl font-bold text-gray-900">${service.price}</span>
