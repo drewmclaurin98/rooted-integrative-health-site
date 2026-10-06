@@ -154,3 +154,66 @@ body {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ------------------------------------------------------------------ *
+ * NIS pathways hero illustration (components/blocks/nis-pathways.tsx).
+ * The final (restored) state is the default; motion only adds the
+ * draw-in and reconnect sequence. Pulses are hidden with reduced motion.
+ * ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: no-preference) {
+  .nis-draw {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: nis-draw 1.1s cubic-bezier(0.65, 0, 0.35, 1) var(--d, 0ms) forwards;
+  }
+  .nis-draw.nis-restore {
+    animation-duration: 1.5s;
+  }
+  .nis-node {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: nis-node 0.5s ease-out var(--d, 0ms) forwards;
+  }
+  .nis-glow {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: nis-glow 2.4s ease-out var(--d, 0ms) forwards;
+  }
+  @keyframes nis-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes nis-node {
+    from {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes nis-glow {
+    0% {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+    30% {
+      opacity: 1;
+      transform: scale(1.7);
+    }
+    100% {
+      opacity: 0.7;
+      transform: scale(1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nis-pulse {
+    display: none;
+  }
+}
