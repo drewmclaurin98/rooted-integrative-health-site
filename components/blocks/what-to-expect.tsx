@@ -1,6 +1,6 @@
 export function WhatToExpect() {
   return (
-    <section className="py-12 sm:py-20 bg-gray-50">
+    <section className="py-12 sm:py-20">
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 data-reveal className="text-3xl sm:text-4xl font-bold text-gray-900 mb-10 leading-tight">
           What to Expect

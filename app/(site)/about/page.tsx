@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import { site } from '@/content/site'
 import { BookingCTA } from '@/components/ui/bookingCTA'
+import { DeepBackdrop } from '@/components/ui/deepBackdrop'
 
 export const metadata: Metadata = {
   alternates: { canonical: '/about' },
@@ -13,10 +14,11 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <section className="bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end py-16 sm:py-20">
+      <section className="relative isolate overflow-hidden bg-gradient-to-b from-deep to-deep-light py-16 sm:py-20">
+        <DeepBackdrop focus="branch" className="opacity-40" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-            <div className="relative w-full h-[380px] sm:h-[460px] rounded-2xl shadow-xl overflow-hidden ring-1 ring-black/5">
+            <div className="relative w-full h-[380px] sm:h-[460px] rounded-2xl shadow-xl overflow-hidden ring-1 ring-white/10">
               <Image
                 src="/caitlin-headshot.jpeg"
                 alt={`${site.practitioner.name}, ${site.practitioner.title}`}
@@ -27,11 +29,11 @@ export default function AboutPage() {
               />
             </div>
             <div>
-              <p className="text-sm font-semibold text-primary uppercase tracking-widest mb-3">About</p>
-              <h1 className="text-4xl sm:text-5xl font-bold text-gray-900">
+              <p className="text-sm font-semibold text-primary-light uppercase tracking-widest mb-3">About</p>
+              <h1 className="text-4xl sm:text-5xl font-bold text-white">
                 {site.practitioner.name}, {site.practitioner.credential}
               </h1>
-              <p className="mt-2 text-lg text-gray-600">{site.practitioner.title}</p>
+              <p className="mt-2 text-lg text-white/75">{site.practitioner.title}</p>
             </div>
           </div>
         </div>

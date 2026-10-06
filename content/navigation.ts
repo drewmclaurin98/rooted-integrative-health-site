@@ -9,7 +9,7 @@ export const primaryNav: NavLink[] = [
   { href: "/about-nis", label: "What is NIS?", ariaLabel: "Learn about NIS" },
   { href: "/services", label: "Services", ariaLabel: "View services and pricing" },
   { href: "/about", label: "About", ariaLabel: "About Caitlin McLaurin" },
-  { href: "/faq", label: "FAQ", ariaLabel: "Frequently asked questions" },
+  { href: "/contact", label: "Contact", ariaLabel: "Contact Rooted Integrative Health" },
 ]
 
 export const bookingCta: NavLink = {
@@ -19,10 +19,10 @@ export const bookingCta: NavLink = {
 }
 
 export const footerNav: NavLink[] = [
-  { href: "/about-nis", label: "What is NIS?" },
+  { href: "/about-nis", label: "About NIS" },
   { href: "/services", label: "Services" },
   { href: "/about", label: "About" },
-  { href: "/faq", label: "FAQ" },
+  { href: "/contact", label: "Contact" },
   { href: "/booking", label: "Book" },
 ]
 

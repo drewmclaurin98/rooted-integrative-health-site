@@ -3,7 +3,7 @@ import { NisPathways } from '@/components/blocks/nis-pathways'
 
 export function Hero() {
   return (
-    <section className="relative isolate flex min-h-[calc(100svh-4rem)] items-center overflow-hidden bg-gradient-to-b from-[#1F3236] to-[#2A444A]">
+    <section className="relative isolate flex min-h-[calc(100svh-4rem)] items-center overflow-hidden bg-gradient-to-b from-deep to-deep-light">
       {/* Background: nervous system drawn as a rooted tree (decorative) */}
       <NisPathways className="absolute inset-0 -z-10 h-full w-full opacity-70 sm:opacity-100" />
 

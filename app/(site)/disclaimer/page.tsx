@@ -11,7 +11,8 @@ export const metadata: Metadata = {
 
 export default function DisclaimerPage() {
   return (
-    <section className="py-16 sm:py-24">
+    // Same soft teal → sage → off-white wash as the middle of the homepage
+    <section className="flex-1 bg-gradient-to-b from-gradient-primary-start via-gradient-sage to-gradient-primary-end py-16 sm:py-24">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-8">Disclaimer</h1>
         <p className="text-gray-700 leading-relaxed">{site.disclaimerFull}</p>

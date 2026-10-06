@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { services } from '@/content/services'
 import { ServiceCard } from '@/components/ui/serviceCard'
 import { FinalCta } from '@/components/blocks/final-cta'
+import { DeepBackdrop } from '@/components/ui/deepBackdrop'
 
 export const metadata: Metadata = {
   alternates: { canonical: '/services' },
@@ -13,11 +14,12 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <section className="bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end py-16 sm:py-20">
+      <section className="relative isolate overflow-hidden bg-gradient-to-b from-deep to-deep-light pt-20 pb-36 sm:pt-24 sm:pb-44">
+        <DeepBackdrop focus="roots" className="opacity-60" />
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-semibold text-primary uppercase tracking-widest mb-3">Services</p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">Simple, Personalized Sessions</h1>
-          <p className="text-lg text-gray-700 leading-relaxed">
+          <p className="text-sm font-semibold text-primary-light uppercase tracking-widest mb-3">Services</p>
+          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">Simple, Personalized Sessions</h1>
+          <p className="text-lg text-white/80 leading-relaxed">
             Every session is one-on-one and tailored to you. Choose the option that fits where you are in your
             NIS experience.
           </p>

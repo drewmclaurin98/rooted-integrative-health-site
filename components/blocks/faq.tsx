@@ -34,13 +34,13 @@ export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section className="py-12 sm:py-20 bg-white">
+    <section className="py-12 sm:py-20">
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 data-reveal className="text-3xl sm:text-4xl font-bold text-gray-900 mb-10 leading-tight">
           Frequently Asked Questions
         </h2>
 
-        <div className="max-w-3xl divide-y divide-gray-200 border-t border-gray-200">
+        <div className="divide-y divide-gray-200 border-t border-gray-200">
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index
             return (
@@ -57,7 +57,7 @@ export function FAQ() {
                 >
                   {faq.question}
                   <svg
-                    className={`w-5 h-5 flex-shrink-0 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                    className={`w-5 h-5 flex-shrink-0 text-gray-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"

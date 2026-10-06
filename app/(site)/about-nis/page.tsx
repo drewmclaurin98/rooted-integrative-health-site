@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { DeepBackdrop } from '@/components/ui/deepBackdrop'
 
 export const metadata: Metadata = {
   title: "What Is NIS? | Neurological Integrative Systems | Rooted Integrative Health",
@@ -13,13 +14,14 @@ export default function AboutNISPage() {
     <div className="min-h-screen bg-white">
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end py-20">
+      <section className="relative isolate overflow-hidden bg-gradient-to-b from-deep to-deep-light py-20 sm:py-28">
+        <DeepBackdrop className="opacity-60" />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <p className="text-sm font-semibold text-primary uppercase tracking-widest mb-3">The Practice</p>
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
+          <p className="text-sm font-semibold text-primary-light uppercase tracking-widest mb-3">The Practice</p>
+          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
             What Is Neurological Integration System (NIS)?
           </h1>
-          <p className="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-white/80 max-w-2xl mx-auto leading-relaxed">
             A gentle, non-invasive approach to healthcare that restores the brain&apos;s ability to communicate
             with every cell in your body — so your body can do what it was designed to do.
           </p>
@@ -251,7 +253,8 @@ export default function AboutNISPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-primary text-white py-16">
+      <section className="relative isolate overflow-hidden bg-gradient-to-b from-deep to-deep-light text-white pt-20 pb-40 sm:pt-24 sm:pb-44">
+        <DeepBackdrop focus="roots" className="opacity-50" />
         <div className="max-w-2xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <h2 data-reveal className="text-3xl font-bold mb-4">Ready to Experience NIS?</h2>
           <p className="text-lg mb-8 text-white/90">

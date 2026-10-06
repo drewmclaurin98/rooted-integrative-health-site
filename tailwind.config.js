@@ -28,6 +28,10 @@ module.exports = {
           900: "#18252A",
           950: "#0C1518",
         },
+        // Deep teal: hero, page headers, closing call-to-action bands and footer.
+        "deep": "#1F3236",
+        "deep-light": "#2A444A",
+        "deep-dark": "#172629",
         "primary": "#4B7179",
         "primary-hover": "#3E5D64",
         "primary-active": "#314A50",
@@ -55,6 +59,8 @@ module.exports = {
         'gradient-primary-start': '#EAF2F4',
         'gradient-primary-middle': '#C9DBE0',
         'gradient-primary-end': '#F7F8F7',
+        // Mid-stop of the homepage wash; primary text stays >= 4.5:1 on it.
+        'gradient-sage': '#E6EEEC',
 
         'gradient-warm-start': '#EFEAEA',
         'gradient-warm-middle': '#F7F8F7',

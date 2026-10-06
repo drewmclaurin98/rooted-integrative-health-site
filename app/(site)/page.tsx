@@ -13,14 +13,17 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <div className="bg-gradient-to-br from-gradient-primary-start via-gradient-primary-middle to-gradient-primary-end">
+    <>
       <Hero />
       <WhatIsNIS />
-      <Feature />
-      <Conditions />
-      <WhatToExpect />
-      <FAQ />
+      {/* One continuous soft teal → sage → off-white wash behind the middle of the page */}
+      <div className="bg-gradient-to-b from-gradient-primary-start via-gradient-sage to-gradient-primary-end">
+        <Feature />
+        <Conditions />
+        <WhatToExpect />
+        <FAQ />
+      </div>
       <FinalCta />
-    </div>
+    </>
   )
 }

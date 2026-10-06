@@ -25,7 +25,7 @@ export default async function BookingPage({
   const { service } = await searchParams
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gradient-primary-start via-gradient-primary-middle to-gradient-primary-end py-16 sm:py-20">
+    <div className="flex-1 bg-gradient-to-br from-gradient-primary-start via-gradient-primary-middle to-gradient-primary-end py-16 sm:py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 text-center mb-3">
           Book an Appointment

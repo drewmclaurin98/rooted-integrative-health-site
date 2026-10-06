@@ -9,7 +9,7 @@ export function Conditions() {
   ]
 
   return (
-    <section className="py-12 sm:py-20 bg-white">
+    <section className="py-12 sm:py-20">
       <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Intro + Headline */}
         <p data-reveal className="text-sm font-medium text-primary uppercase tracking-wide mb-2">
@@ -26,7 +26,7 @@ export function Conditions() {
               key={condition}
               data-reveal
               style={{ ["--reveal-delay" as string]: `${(i % 3) * 90}ms` }}
-              className="flex items-center gap-3 bg-gray-50 rounded-xl border border-gray-200 px-4 py-4"
+              className="flex items-center gap-3 bg-white/80 rounded-xl border border-gray-200 px-4 py-4"
             >
               <svg
                 className="w-5 h-5 text-primary flex-shrink-0"
@@ -47,7 +47,7 @@ export function Conditions() {
         </div>
 
         {/* Disclaimer */}
-        <p data-reveal="fade" className="text-xs text-gray-500 leading-relaxed max-w-2xl">
+        <p data-reveal="fade" className="text-xs text-gray-600 leading-relaxed max-w-2xl">
           NIS does not diagnose or treat medical conditions. Sessions are intended to support neurological function and the body&apos;s regulatory processes.
         </p>
       </div>

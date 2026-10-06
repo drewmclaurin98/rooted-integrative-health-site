@@ -73,7 +73,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
   // suppressHydrationWarning: the inline script below adds "reveal-ready" to <html> before React loads.
   return (
     <html lang="en" className={`${lora.variable} ${lato.variable}`} suppressHydrationWarning>
-      <body className="font-sans text-gray-900">
+      <body className="flex min-h-svh flex-col font-sans text-gray-900">
         {/* Set the reveal flag before first paint so marked elements start hidden (no flash). */}
         <script
           dangerouslySetInnerHTML={{
@@ -86,7 +86,8 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         <Header />
-        <main>
+        {/* flex-1 keeps the footer at the bottom on short pages; pages can use flex-1 to stretch their background */}
+        <main className="flex flex-1 flex-col">
           {children}
         </main>
         <Footer />

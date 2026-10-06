@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export default function SuccessPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end py-20">
+    <div className="flex-1 bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end py-20">
       <div className="max-w-md mx-auto px-4">
         <div className="bg-white rounded-xl shadow p-8 text-center">
           <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">

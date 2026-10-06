@@ -42,7 +42,7 @@ function CancelContent() {
 
 export default function CancelPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end py-20">
+    <div className="flex-1 bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end py-20">
       <div className="max-w-md mx-auto px-4">
         <Suspense>
           <CancelContent />
