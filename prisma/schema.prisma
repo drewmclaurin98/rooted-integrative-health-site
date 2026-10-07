@@ -16,7 +16,7 @@ model Booking {
   id            Int       @id @default(autoincrement())
   serviceName   String
   price         Int
-  bookingTime   DateTime
+  bookingTime   DateTime  @unique // one active hold/booking per start time (see lib/booking.ts)
   customerEmail String?
   status        String    @default("pending")
   expiresAt     DateTime?

@@ -31,7 +31,7 @@ export const site = {
   },
 
   contact: {
-    email: "caitlin.j.mclaurin@gmail.com",
+    email: "rootedintegrativehealth@gmail.com",
     phone: "(206) 715-8708",
     instagram: "https://www.instagram.com/rootedintegrative",
     instagramHandle: "@rootedintegrative",

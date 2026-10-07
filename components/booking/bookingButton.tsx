@@ -28,9 +28,9 @@ export function BookButton({ service, time, customerEmail, mockStripe }: Props) 
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        // Price is looked up on the server from the service id; it is never sent from here.
         body: JSON.stringify({
-          serviceName: service.name,
-          price: service.price,
+          serviceId: service.id,
           bookingTime: time,
           customerEmail: customerEmail || undefined,
         }),
