@@ -4,7 +4,8 @@ import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { sendBookingEmails } from "@/lib/emails"
 
-/* Stripe webhook: confirms paid bookings (and emails both sides) and releases expired holds. */
+/* Stripe webhook: confirms paid bookings (and emails both sides), releases expired holds,
+   and frees the time slot when a payment is fully refunded. */
 export async function POST(req: Request) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
   const body = await req.text()
@@ -52,6 +53,25 @@ export async function POST(req: Request) {
     if (bookingId) {
       // Only remove it if it is still an unpaid hold.
       await prisma.booking.deleteMany({ where: { id: bookingId, status: "pending" } })
+    }
+  }
+
+  if (event.type === "charge.refunded") {
+    const charge = event.data.object as Stripe.Charge
+    // Only a full refund cancels the appointment; a partial refund (e.g. a discount) keeps it.
+    const paymentIntent =
+      typeof charge.payment_intent === "string" ? charge.payment_intent : charge.payment_intent?.id
+    if (charge.refunded && paymentIntent) {
+      const sessions = await stripe.checkout.sessions.list({ payment_intent: paymentIntent, limit: 1 })
+      const bookingId = Number(sessions.data[0]?.metadata?.bookingId)
+      if (bookingId) {
+        // Delete rather than mark cancelled: bookingTime is unique, so a leftover row would
+        // keep the slot blocked. Stripe keeps the payment and refund history.
+        const { count } = await prisma.booking.deleteMany({ where: { id: bookingId } })
+        console.log(count ? "Booking refunded and removed:" : "Refund for already-removed booking:", bookingId)
+      } else {
+        console.error("Refund with no matching booking:", charge.id)
+      }
     }
   }
 
