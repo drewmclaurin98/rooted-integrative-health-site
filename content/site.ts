@@ -31,7 +31,7 @@ export const site = {
   },
 
   contact: {
-    email: "rootedintegrativehealth@gmail.com",
+    email: "rootedintegrative@gmail.com",
     phone: "(206) 715-8708",
     instagram: "https://www.instagram.com/rootedintegrative",
     instagramHandle: "@rootedintegrative",
