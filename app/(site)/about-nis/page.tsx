@@ -15,7 +15,7 @@ export default function AboutNISPage() {
 
       {/* Hero Section */}
       <section className="relative isolate overflow-hidden bg-gradient-to-b from-deep to-deep-light py-20 sm:py-28">
-        <DeepBackdrop className="opacity-60" />
+        <DeepBackdrop className="opacity-60" priority />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-sm font-semibold text-primary-light uppercase tracking-widest mb-3">The Practice</p>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">
