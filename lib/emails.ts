@@ -134,3 +134,51 @@ export async function sendBookingEmails(b: BookingInfo): Promise<void> {
       console.error("Booking email failed:", r.value.error)
   }
 }
+
+/**
+ * Sent when a payment arrived for a time that could no longer be held (the hold was released
+ * and someone else took the slot), so the payment was refunded automatically. Never throws.
+ */
+export async function sendAutoRefundEmails(info: {
+  serviceName: string
+  bookingTime: Date | null
+  price: number
+  customerEmail: string | null
+}): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY
+  const from = process.env.FROM_EMAIL
+  if (!apiKey || !from) return
+  const resend = new Resend(apiKey)
+  const when = info.bookingTime ? formatBookingTime(info.bookingTime) : "the time you selected"
+
+  const sends: Promise<unknown>[] = [
+    resend.emails.send({
+      from,
+      to: site.contact.email,
+      replyTo: info.customerEmail ?? undefined,
+      subject: `Automatic refund: ${info.serviceName}, ${when}`,
+      html: layout(
+        "Payment refunded automatically",
+        `<p style="margin:0 0 16px;font-size:15px;line-height:1.6">A client paid $${info.price} for <strong>${esc(info.serviceName)}</strong> on ${esc(when)}, but that time was no longer available, so the website refunded the payment in full. No action is needed unless you'd like to offer them another time.</p>
+        <p style="margin:0;font-size:15px;line-height:1.6">Client email: <strong>${esc(info.customerEmail ?? "not provided")}</strong></p>`,
+      ),
+    }),
+  ]
+  if (info.customerEmail) {
+    sends.push(
+      resend.emails.send({
+        from,
+        to: info.customerEmail,
+        replyTo: site.contact.email,
+        subject: `Your payment was refunded: that time is no longer available`,
+        html: layout(
+          "Sorry, that time was just taken",
+          `<p style="margin:0 0 16px;font-size:15px;line-height:1.6">Your payment for <strong>${esc(info.serviceName)}</strong> on ${esc(when)} went through after that time had been released, and another client booked it. We've refunded your $${info.price} in full; it can take 5–10 days to appear on your statement.</p>
+          <p style="margin:0;font-size:15px;line-height:1.6">Please <a href="${site.url}/booking" style="color:#4B7179">choose another time</a>, or reply to this email or call ${esc(site.contact.phone)} and we'll find one together.</p>`,
+        ),
+      }),
+    )
+  }
+  const results = await Promise.allSettled(sends)
+  for (const r of results) if (r.status === "rejected") console.error("Auto-refund email failed:", r.reason)
+}

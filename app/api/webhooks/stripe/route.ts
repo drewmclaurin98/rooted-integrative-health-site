@@ -2,9 +2,82 @@ import Stripe from "stripe"
 import { headers } from "next/headers"
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { sendBookingEmails } from "@/lib/emails"
+import { sendAutoRefundEmails, sendBookingEmails } from "@/lib/emails"
 import { addBookingEvent, removeBookingEvent } from "@/lib/googleCalendar"
-import { durationFor } from "@/lib/booking"
+import { MAX_DURATION_MINUTES, activeBookingWhere, conflicts, durationFor } from "@/lib/booking"
+import { SCHEDULE } from "@/lib/schedule"
+import { getServiceById } from "@/content/services"
+import { Prisma } from "@prisma/client"
+
+/**
+ * A paid checkout whose hold no longer exists. Re-creates the booking (same id, so refunds and
+ * the calendar event still match) when the time is still free; otherwise refunds in full.
+ */
+async function recoverPaidBooking(
+  stripe: Stripe,
+  session: Stripe.Checkout.Session,
+  bookingId: number,
+  email: string | null
+) {
+  const service = getServiceById(session.metadata?.serviceId)
+  const start = session.metadata?.bookingTime ? new Date(session.metadata.bookingTime) : null
+
+  if (service && start && !isNaN(start.getTime()) && start.getTime() > Date.now()) {
+    const buffer = SCHEDULE.bufferMinutes
+    const nearby = await prisma.booking.findMany({
+      where: {
+        bookingTime: {
+          gt: new Date(start.getTime() - (MAX_DURATION_MINUTES + buffer) * 60_000),
+          lt: new Date(start.getTime() + (service.duration + buffer) * 60_000),
+        },
+        ...activeBookingWhere(),
+      },
+      select: { bookingTime: true, serviceName: true },
+    })
+    const free = !nearby.some((b) =>
+      conflicts(start, service.duration, b.bookingTime, durationFor(b.serviceName), buffer)
+    )
+    if (free) {
+      try {
+        const booking = await prisma.booking.create({
+          data: {
+            id: bookingId,
+            serviceName: service.name,
+            price: service.price,
+            bookingTime: start,
+            customerEmail: email,
+            status: "confirmed",
+          },
+        })
+        await sendBookingEmails(booking)
+        await addBookingEvent(booking, service.duration).catch((err) =>
+          console.error("Could not add booking to Google Calendar:", bookingId, err)
+        )
+        console.log("Paid after the hold was released; booking re-created:", bookingId)
+        return
+      } catch (err) {
+        if (!(err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002")) throw err
+        // Someone took the time (or the id) a moment ago: fall through to the refund.
+      }
+    }
+  }
+
+  const paymentIntent =
+    typeof session.payment_intent === "string" ? session.payment_intent : session.payment_intent?.id
+  if (!paymentIntent) {
+    console.error("Paid checkout for a missing booking, and no payment intent to refund:", session.id)
+    return
+  }
+  // The idempotency key means a retried webhook can never refund twice.
+  await stripe.refunds.create({ payment_intent: paymentIntent }, { idempotencyKey: `rih-auto-refund-${session.id}` })
+  await sendAutoRefundEmails({
+    serviceName: service?.name ?? "your session",
+    bookingTime: start && !isNaN(start.getTime()) ? start : null,
+    price: service?.price ?? (session.amount_total ?? 0) / 100,
+    customerEmail: email,
+  })
+  console.warn("Paid checkout for a time that was no longer available; refunded:", session.id)
+}
 
 /* Stripe webhook: confirms paid bookings (and emails both sides), releases expired holds,
    and frees the time slot when a payment is fully refunded. */
@@ -48,9 +121,11 @@ export async function POST(req: Request) {
         }
         console.log("Booking confirmed:", bookingId)
       } else {
-        // Paid, but the hold was already gone (e.g. it expired). Needs a manual look / refund.
+        // Already confirmed = a retried delivery; nothing to do. Missing = the hold was released
+        // before payment finished (cancelled or expired): rebook it if the time is still free,
+        // otherwise refund automatically and tell both sides.
         const existing = await prisma.booking.findUnique({ where: { id: bookingId } })
-        if (!existing) console.error("Paid checkout for a missing booking — refund or rebook manually:", session.id)
+        if (!existing) await recoverPaidBooking(stripe, session, bookingId, email)
       }
     }
   }

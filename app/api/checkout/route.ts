@@ -13,6 +13,7 @@ import {
   getServiceByName,
 } from "@/lib/booking"
 import { SCHEDULE, ScheduleUnavailableError, isBookableStart } from "@/lib/schedule"
+import { cancelToken } from "@/lib/cancelToken"
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const SLOT_TAKEN = "That time was just booked. Please choose another time."
@@ -125,10 +126,11 @@ export async function POST(req: Request) {
             quantity: 1,
           },
         ],
-        metadata: { bookingId: String(booking.id), serviceId: service.id },
+        // bookingTime lets the webhook re-create the booking if the hold was released before payment.
+        metadata: { bookingId: String(booking.id), serviceId: service.id, bookingTime: start.toISOString() },
         expires_at: Math.floor(expiresAt.getTime() / 1000),
         success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${baseUrl}/cancel?bookingId=${booking.id}`,
+        cancel_url: `${baseUrl}/cancel?bookingId=${booking.id}&token=${cancelToken(booking.id)}`,
       })
       return NextResponse.json({ url: session.url })
     } catch (err) {

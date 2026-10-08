@@ -7,16 +7,17 @@ import { Suspense, useEffect } from "react"
 function CancelContent() {
   const searchParams = useSearchParams()
   const bookingId = searchParams.get("bookingId")
+  const token = searchParams.get("token")
 
   useEffect(() => {
-    if (bookingId) {
+    if (bookingId && token) {
       fetch("/api/booking/cancel", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bookingId }),
+        body: JSON.stringify({ bookingId, token }),
       }).catch((err) => console.error("Failed to cancel booking:", err))
     }
-  }, [bookingId])
+  }, [bookingId, token])
 
   return (
     <div className="bg-white rounded-xl shadow p-8 text-center">
