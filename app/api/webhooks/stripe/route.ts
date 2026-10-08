@@ -3,6 +3,8 @@ import { headers } from "next/headers"
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import { sendBookingEmails } from "@/lib/emails"
+import { addBookingEvent, removeBookingEvent } from "@/lib/googleCalendar"
+import { durationFor } from "@/lib/booking"
 
 /* Stripe webhook: confirms paid bookings (and emails both sides), releases expired holds,
    and frees the time slot when a payment is fully refunded. */
@@ -37,7 +39,13 @@ export async function POST(req: Request) {
 
       if (count === 1) {
         const booking = await prisma.booking.findUnique({ where: { id: bookingId } })
-        if (booking) await sendBookingEmails(booking)
+        if (booking) {
+          await sendBookingEmails(booking)
+          // Put the appointment on Caitlin's Office Hours calendar. Never fail the webhook over it.
+          await addBookingEvent(booking, durationFor(booking.serviceName)).catch((err) =>
+            console.error("Could not add booking to Google Calendar:", bookingId, err)
+          )
+        }
         console.log("Booking confirmed:", bookingId)
       } else {
         // Paid, but the hold was already gone (e.g. it expired). Needs a manual look / refund.
@@ -67,6 +75,12 @@ export async function POST(req: Request) {
       if (bookingId) {
         // Delete rather than mark cancelled: bookingTime is unique, so a leftover row would
         // keep the slot blocked. Stripe keeps the payment and refund history.
+        const booking = await prisma.booking.findUnique({ where: { id: bookingId } })
+        if (booking) {
+          await removeBookingEvent(booking).catch((err) =>
+            console.error("Could not remove refunded booking from Google Calendar:", bookingId, err)
+          )
+        }
         const { count } = await prisma.booking.deleteMany({ where: { id: bookingId } })
         console.log(count ? "Booking refunded and removed:" : "Refund for already-removed booking:", bookingId)
       } else {

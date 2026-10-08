@@ -9,10 +9,10 @@ import {
   activeBookingWhere,
   durationFor,
   formatBookingTime,
+  conflicts,
   getServiceByName,
-  isValidStartTime,
-  overlaps,
 } from "@/lib/booking"
+import { SCHEDULE, ScheduleUnavailableError, isBookableStart } from "@/lib/schedule"
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const SLOT_TAKEN = "That time was just booked. Please choose another time."
@@ -32,27 +32,37 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Invalid booking time" }, { status: 400 })
     if (start <= new Date())
       return NextResponse.json({ error: "Cannot book a time in the past" }, { status: 400 })
-    // Only real start times inside business hours for this service can be booked.
-    if (!isValidStartTime(start, service))
-      return NextResponse.json({ error: "That time isn't available for this service" }, { status: 400 })
+    // Only real open start times (inside Caitlin's office hours, with notice and buffer) can be
+    // booked. This re-reads the calendar, so a just-removed office day can't be booked.
+    let bookable: boolean
+    try {
+      bookable = await isBookableStart(start, service.duration)
+    } catch (err) {
+      if (err instanceof ScheduleUnavailableError)
+        return NextResponse.json({ error: err.message }, { status: 503 })
+      throw err
+    }
+    if (!bookable)
+      return NextResponse.json({ error: "That time is no longer available. Please choose another time." }, { status: 409 })
 
     const email = typeof customerEmail === "string" && EMAIL_RE.test(customerEmail) ? customerEmail : null
 
     // 2. Hold the slot. Expired holds are cleared first so they never block a time.
     //    The unique index on bookingTime stops two holds for the same start time;
-    //    the overlap check below covers different start times (e.g. 9:00 vs 9:45).
+    //    the overlap check below (with the room-reset buffer) covers different start times.
     const expiresAt = new Date(Date.now() + HOLD_MINUTES * 60 * 1000)
     // (5-minute grace so a payment finishing right at the deadline can still be confirmed.)
     await prisma.booking.deleteMany({
       where: { status: "pending", expiresAt: { lte: new Date(Date.now() - 5 * 60_000) } },
     })
 
+    const buffer = SCHEDULE.bufferMinutes
     const nearby = () =>
       prisma.booking.findMany({
         where: {
           bookingTime: {
-            gt: new Date(start.getTime() - MAX_DURATION_MINUTES * 60_000),
-            lt: new Date(start.getTime() + service.duration * 60_000),
+            gt: new Date(start.getTime() - (MAX_DURATION_MINUTES + buffer) * 60_000),
+            lt: new Date(start.getTime() + (service.duration + buffer) * 60_000),
           },
           ...activeBookingWhere(),
         },
@@ -60,7 +70,7 @@ export async function POST(req: Request) {
       })
 
     const clash = (rows: { bookingTime: Date; serviceName: string }[]) =>
-      rows.some((b) => overlaps(start, service.duration, b.bookingTime, durationFor(b.serviceName)))
+      rows.some((b) => conflicts(start, service.duration, b.bookingTime, durationFor(b.serviceName), buffer))
 
     if (clash(await nearby())) return NextResponse.json({ error: SLOT_TAKEN }, { status: 409 })
 
@@ -86,7 +96,7 @@ export async function POST(req: Request) {
     // 3. Re-check after inserting: if two overlapping holds were created at the same moment,
     //    the earlier one (lower id) wins and this one is released.
     const after = (await nearby()).filter((b) => b.id !== booking.id)
-    if (after.some((b) => b.id < booking.id && overlaps(start, service.duration, b.bookingTime, durationFor(b.serviceName)))) {
+    if (after.some((b) => b.id < booking.id && conflicts(start, service.duration, b.bookingTime, durationFor(b.serviceName), buffer))) {
       await prisma.booking.delete({ where: { id: booking.id } })
       return NextResponse.json({ error: SLOT_TAKEN }, { status: 409 })
     }

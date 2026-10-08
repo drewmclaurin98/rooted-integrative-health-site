@@ -1,15 +1,11 @@
 /**
  * Booking rules shared by /api/availability, /api/checkout and the Stripe webhook.
+ * When Caitlin is open (office hours, buffer, notice) lives in lib/schedule.ts.
  * Services, prices and durations always come from content/services.ts on the server,
  * never from the browser.
  */
 import { services, type Service } from "@/content/services"
 import { PRACTITIONER_TIMEZONE } from "@/lib/config"
-import { getAvailableSlots } from "@/lib/availability"
-
-/** Business hours used to generate bookable start times (practitioner's local time). */
-export const OPEN_HOUR = 9
-export const CLOSE_HOUR = 17
 
 /** How long an unpaid checkout holds a time slot (Stripe's minimum session expiry is 30 min). */
 export const HOLD_MINUTES = 30
@@ -33,6 +29,22 @@ export function overlaps(startA: Date, durA: number, startB: Date, durB: number)
   return a0 < b1 && b0 < a1
 }
 
+/** Like `overlaps`, but also keeps `bufferMinutes` free between the two appointments. */
+export function conflicts(
+  startA: Date,
+  durA: number,
+  startB: Date,
+  durB: number,
+  bufferMinutes: number
+): boolean {
+  const a0 = startA.getTime()
+  const a1 = a0 + durA * 60_000
+  const b0 = startB.getTime()
+  const b1 = b0 + durB * 60_000
+  const buf = bufferMinutes * 60_000
+  return a0 < b1 + buf && b0 < a1 + buf
+}
+
 /** Prisma `where` for bookings that currently block a time: confirmed, or pending and not yet expired. */
 export const activeBookingWhere = () => ({
   OR: [{ status: "confirmed" }, { status: "pending", expiresAt: { gt: new Date() } }],
@@ -46,12 +58,6 @@ export function localDateString(date: Date): string {
     month: "2-digit",
     day: "2-digit",
   }).format(date)
-}
-
-/** True when `start` is one of the bookable start times for this service on its day. */
-export function isValidStartTime(start: Date, service: Service): boolean {
-  const slots = getAvailableSlots(localDateString(start), OPEN_HOUR, CLOSE_HOUR, service.duration)
-  return slots.includes(start.toISOString())
 }
 
 /** Formats a booking time for people, in the practitioner's time zone. */
