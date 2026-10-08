@@ -72,7 +72,12 @@ const structuredData = {
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   // suppressHydrationWarning: the inline script below adds "reveal-ready" to <html> before React loads.
   return (
-    <html lang="en" className={`${lora.variable} ${lato.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${lora.variable} ${lato.variable}`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <body className="flex min-h-svh flex-col font-sans text-gray-900">
         {/* Set the reveal flag before first paint so marked elements start hidden (no flash). */}
         <script

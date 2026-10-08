@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Anchor links (e.g. "What Is NIS?") glide to their section instead of jumping.
+   scroll-padding keeps the target clear of the 64px sticky nav.
+   Next.js turns this off during page navigations via data-scroll-behavior on <html>. */
+html {
+  scroll-padding-top: 4rem;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 :root {
   /* Light-only site: keep browser UI (form controls, scrollbars) light too */
   color-scheme: light;
