@@ -2,53 +2,64 @@
 
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
-import { Suspense, useEffect } from "react"
+import { Suspense, useEffect, useState } from "react"
+import { buttonClasses } from "@/components/ui/button"
+import { ResultCard } from "@/components/booking/resultCard"
 
 function CancelContent() {
   const searchParams = useSearchParams()
   const bookingId = searchParams.get("bookingId")
   const token = searchParams.get("token")
+  // The cancel API reports "paid" if the payment actually completed (e.g. in another tab).
+  const [paid, setPaid] = useState(false)
 
   useEffect(() => {
-    if (bookingId && token) {
-      fetch("/api/booking/cancel", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bookingId, token }),
-      }).catch((err) => console.error("Failed to cancel booking:", err))
-    }
+    if (!bookingId || !token) return
+    fetch("/api/booking/cancel", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ bookingId, token }),
+    })
+      .then((r) => r.json())
+      .then((data) => setPaid(Boolean(data?.paid)))
+      .catch((err) => console.error("Failed to cancel booking:", err))
   }, [bookingId, token])
 
+  if (paid) {
+    return (
+      <ResultCard tone="success" eyebrow="Payment received" title="Your payment went through">
+        <p className="text-center">
+          It looks like this booking was paid after all, so your time is still reserved. Check your email for the
+          confirmation.
+        </p>
+        <div className="text-center">
+          <Link href="/" className={buttonClasses("primary", "md")}>
+            Back to home
+          </Link>
+        </div>
+      </ResultCard>
+    )
+  }
+
   return (
-    <div className="bg-white rounded-xl shadow p-8 text-center">
-      <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-        <svg className="w-8 h-8 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-2">Booking Cancelled</h1>
-      <p className="text-gray-600 mb-6">
-        Your payment was not completed. No charges were made. You can try booking again whenever you are ready.
+    <ResultCard tone="notice" eyebrow="Checkout cancelled" title="No payment was made">
+      <p className="text-center">
+        Your booking wasn&apos;t completed and you haven&apos;t been charged. The time you picked has been released, so
+        you can choose it again or pick another.
       </p>
-      <Link
-        href="/booking"
-        className="inline-block rounded-lg px-6 py-3 text-white bg-emerald-600 hover:bg-emerald-700"
-        aria-label="Try booking again"
-      >
-        Try Again
-      </Link>
-    </div>
+      <div className="text-center">
+        <Link href="/booking" className={buttonClasses("primary", "md")} aria-label="Try booking again">
+          Choose a time
+        </Link>
+      </div>
+    </ResultCard>
   )
 }
 
 export default function CancelPage() {
   return (
-    <div className="flex-1 bg-gradient-to-br from-gradient-start via-gradient-middle to-gradient-end py-20">
-      <div className="max-w-md mx-auto px-4">
-        <Suspense>
-          <CancelContent />
-        </Suspense>
-      </div>
-    </div>
+    <Suspense>
+      <CancelContent />
+    </Suspense>
   )
 }

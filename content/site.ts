@@ -37,6 +37,13 @@ export const site = {
     instagramHandle: "@rootedintegrative",
   },
 
+  // Booking policies. Shown on the booking page, the confirmation page and the client email.
+  // DRAFT: confirm the notice period and refund terms with Caitlin before launch.
+  policies: {
+    cancellation:
+      "Need to reschedule or cancel? Contact us at least 24 hours before your appointment for a full refund or a new time. Cancellations with less than 24 hours' notice and missed appointments are not refunded.",
+  },
+
   // Short disclaimer for the footer.
   disclaimerShort:
     "Rooted Integrative Health provides wellness services and does not diagnose, treat, cure, or prevent medical conditions. Services are not a substitute for medical care.",

@@ -2,7 +2,7 @@ import Stripe from "stripe"
 import { headers } from "next/headers"
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
-import { sendAutoRefundEmails, sendBookingEmails } from "@/lib/emails"
+import { sendAutoRefundEmails, sendBookingEmails, sendCancellationEmails } from "@/lib/emails"
 import { addBookingEvent, removeBookingEvent } from "@/lib/googleCalendar"
 import { MAX_DURATION_MINUTES, activeBookingWhere, conflicts, durationFor } from "@/lib/booking"
 import { SCHEDULE } from "@/lib/schedule"
@@ -158,6 +158,11 @@ export async function POST(req: Request) {
         }
         const { count } = await prisma.booking.deleteMany({ where: { id: bookingId } })
         console.log(count ? "Booking refunded and removed:" : "Refund for already-removed booking:", bookingId)
+        // Only the delivery that actually removed the booking emails, so retries never send twice.
+        // (Automatic refunds have no booking left at this point, so they don't send this email.)
+        if (count === 1 && booking?.status === "confirmed") {
+          await sendCancellationEmails(booking, charge.amount_refunded / 100)
+        }
       } else {
         console.error("Refund with no matching booking:", charge.id)
       }

@@ -21,16 +21,18 @@ const esc = (s: string) =>
 const icsDate = (d: Date) => d.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "")
 
 /** A single-event .ics file both Google Calendar and Apple Calendar can import. */
-export function bookingIcs(b: BookingInfo): string {
+export function bookingIcs(b: BookingInfo, { cancel = false }: { cancel?: boolean } = {}): string {
   const end = new Date(b.bookingTime.getTime() + durationFor(b.serviceName) * 60_000)
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
     "PRODID:-//Rooted Integrative Health//Booking//EN",
     "CALSCALE:GREGORIAN",
-    "METHOD:PUBLISH",
+    // Same UID + METHOD:CANCEL lets calendar apps remove the original invite.
+    cancel ? "METHOD:CANCEL" : "METHOD:PUBLISH",
     "BEGIN:VEVENT",
     `UID:booking-${b.id}@rootedintegrativehealth.com`,
+    ...(cancel ? ["STATUS:CANCELLED", "SEQUENCE:1"] : []),
     `DTSTAMP:${icsDate(new Date())}`,
     `DTSTART:${icsDate(b.bookingTime)}`,
     `DTEND:${icsDate(end)}`,
@@ -77,7 +79,8 @@ export function clientEmailHtml(b: BookingInfo): string {
     `<p style="margin:0 0 20px;font-size:15px;line-height:1.6">Thank you for booking with ${esc(site.practitioner.name)}. Here are your details:</p>
     ${details(b)}
     <p style="margin:0 0 12px;font-size:15px;line-height:1.6">${esc(site.location.note)}</p>
-    <p style="margin:0 0 12px;font-size:15px;line-height:1.6">A calendar invite is attached. If you need to reschedule or cancel, reply to this email or call ${esc(site.contact.phone)}.</p>`,
+    <p style="margin:0 0 12px;font-size:15px;line-height:1.6">A calendar invite is attached. If you need to reschedule or cancel, reply to this email or call ${esc(site.contact.phone)}.</p>
+    <p style="margin:16px 0 0;padding:12px 14px;background:#F6F8F8;border-radius:8px;font-size:13px;line-height:1.6;color:#4A5A5E"><strong style="color:#18252A">Cancellation policy:</strong> ${esc(site.policies.cancellation)}</p>`,
   )
 }
 
@@ -181,4 +184,62 @@ export async function sendAutoRefundEmails(info: {
   }
   const results = await Promise.allSettled(sends)
   for (const r of results) if (r.status === "rejected") console.error("Auto-refund email failed:", r.reason)
+}
+
+/**
+ * Sent when Caitlin cancels a booking by fully refunding it in Stripe. Tells the client their
+ * appointment is cancelled and refunded (with a calendar cancellation), and confirms it to Caitlin.
+ * Never throws.
+ */
+export async function sendCancellationEmails(b: BookingInfo, refundedAmount: number): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY
+  const from = process.env.FROM_EMAIL
+  if (!apiKey || !from) return
+  const resend = new Resend(apiKey)
+  const when = formatBookingTime(b.bookingTime)
+  const amount = `$${Number.isInteger(refundedAmount) ? refundedAmount : refundedAmount.toFixed(2)}`
+  const details = `<table role="presentation" cellpadding="0" cellspacing="0" style="width:100%;margin:0 0 20px;font-size:15px">
+    ${row("Session", b.serviceName)}
+    ${row("When", when)}
+    ${row("Refunded", amount)}
+  </table>`
+
+  const sends: Promise<unknown>[] = [
+    resend.emails.send({
+      from,
+      to: site.contact.email,
+      replyTo: b.customerEmail ?? undefined,
+      subject: `Cancelled & refunded: ${b.serviceName}, ${when}`,
+      html: layout(
+        "Booking cancelled",
+        `${details}<p style="margin:0;font-size:15px;line-height:1.6">The payment was refunded in Stripe, so this appointment was removed from the booking calendar and the time is open again. Client email: <strong>${esc(b.customerEmail ?? "not provided")}</strong></p>`,
+      ),
+    }),
+  ]
+  if (b.customerEmail) {
+    sends.push(
+      resend.emails.send({
+        from,
+        to: b.customerEmail,
+        replyTo: site.contact.email,
+        subject: `Your ${b.serviceName} on ${when} has been cancelled`,
+        html: layout(
+          "Your appointment has been cancelled",
+          `<p style="margin:0 0 16px;font-size:15px;line-height:1.6">Your appointment with ${esc(site.practitioner.name)} has been cancelled and your payment refunded.</p>
+          ${details}
+          <p style="margin:0 0 12px;font-size:15px;line-height:1.6">Refunds can take 5–10 days to appear on your statement.</p>
+          <p style="margin:0;font-size:15px;line-height:1.6">Whenever you're ready, you can <a href="${site.url}/booking" style="color:#4B7179">book a new time</a>, or reply to this email or call ${esc(site.contact.phone)}.</p>`,
+        ),
+        attachments: [
+          { filename: "cancelled.ics", content: Buffer.from(bookingIcs(b, { cancel: true })).toString("base64") },
+        ],
+      }),
+    )
+  }
+  const results = await Promise.allSettled(sends)
+  for (const r of results) {
+    if (r.status === "rejected") console.error("Cancellation email failed:", r.reason)
+    else if (r.value && typeof r.value === "object" && "error" in r.value && r.value.error)
+      console.error("Cancellation email failed:", r.value.error)
+  }
 }

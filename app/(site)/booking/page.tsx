@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { services } from "@/content/services"
 import { BookingWidget, type BookingService } from "@/components/booking/bookingWidget"
+import { site } from "@/content/site"
 
 export const metadata: Metadata = {
   alternates: { canonical: '/booking' },
@@ -34,6 +35,9 @@ export default async function BookingPage({
           Choose a service, pick a date and time, and pay securely. No account required.
         </p>
         <BookingWidget services={bookingServices} initialServiceId={service} />
+        <p className="mx-auto mt-6 max-w-2xl text-center text-sm leading-relaxed text-gray-600">
+          <strong className="text-gray-800">Cancellation policy:</strong> {site.policies.cancellation}
+        </p>
       </div>
     </div>
   )
